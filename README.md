@@ -4,3 +4,5 @@ Final Project for COMP 307 using HTML/CSS/JS/Python/PostgreSQL
   * Janssen Qu
   * Zhongyu Zheng
   * Inès Rabiey
+
+Simply type `python index.py` to run the code!
