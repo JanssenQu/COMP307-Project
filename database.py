@@ -15,7 +15,6 @@ def get_db():
         top.sqlite_db = sqlite3.connect(DATABASE)
     return top.sqlite_db
 
-@app.teardown_appcontext
 def close_connection(exception):
     top = _app_ctx_stack.top
     if hasattr(top, 'sqlite_db'):
