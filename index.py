@@ -62,8 +62,7 @@ def register():
         if sysop:
             mutate_db('INSERT INTO sys_ops VALUES (?)', [uid])
 
-        #create session entry and pass it to dashboard
-        return redirect(url_for("dashboard", session_id=1234))
+        return redirect(url_for("login"))
 
     return render_template('register.html')
 
