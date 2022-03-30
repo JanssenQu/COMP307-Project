@@ -143,3 +143,13 @@ CREATE TABLE ta_applied_courses (
     FOREIGN KEY (cohort_id) REFERENCES ta_cohort (cohort_id),
     FOREIGN KEY (course_id, course_term) REFERENCES course_terms (course_id, course_term)
 );
+
+CREATE TABLE sessions (
+    session_id integer,
+    user_id integer,
+    session_start text,
+    session_expiry text,
+    logged_in BIT,
+    PRIMARY KEY (session_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
+);

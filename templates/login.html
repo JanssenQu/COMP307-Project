@@ -1,3 +1,21 @@
-login
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <form action="{{ url_for('login') }}" method="POST">
+        <h1>Login</h1>
 
-<br><br><a href="/register">Register</a>
+        <label for="usrname"><b>Username</b></label><br>
+        <input type="text" placeholder="Enter Username" name="usrname" id="usrname" required>
+        <br><br>
+
+        <label for="psw"><b>Password</b></label><br>
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+        <br><br>
+
+        <button type="submit">Login</button>
+    </form>
+    <div>{{msg}}</div>
+    <p>Dont't have an account?  <a href="{{url_for('register')}}"> Sign Up here!</a></p>
+  </body>
+</html>

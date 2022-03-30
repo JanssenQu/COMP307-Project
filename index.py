@@ -1,3 +1,4 @@
+from unicodedata import name
 from flask import Flask, redirect, url_for, render_template, request
 from database import *
 
@@ -5,13 +6,25 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return redirect(url_for("page", name="login"))
+    return redirect(url_for("login"))
 
-@app.route("/<name>/")
-def page(name):
-    return render_template(name + ".html")
+@app.route("/login/", methods=['GET', 'POST'])
+def login():
+    msg = ''
+    if request.method == 'POST':
+        usr = request.form['usrname']
+        pwd = request.form['psw']  # todo encrypt the password
+        id = query_db('SELECT user_id FROM users WHERE username = ? AND password = ?', [usr, pwd])
+        if id:
+            #create session entry and pass it to dashboard
+            return redirect(url_for("dashboard", session_id=1234))
+        else:
+            msg = 'Wrong username or password.'
+            return render_template('login.html', msg = msg)
+    
+    return render_template("login.html")
 
-@app.route("/register/", methods=['POST','GET'])
+@app.route("/register/", methods=['GET','POST'])
 def register():
     if request.method == 'POST':
         # get form items
@@ -49,10 +62,15 @@ def register():
         if sysop:
             mutate_db('INSERT INTO sys_ops VALUES (?)', [uid])
 
-        return redirect(url_for("page", name="login"))
+        #create session entry and pass it to dashboard
+        return redirect(url_for("dashboard", session_id=1234))
 
-    else:
-        return render_template("register.html")
+    return render_template('register.html')
+
+@app.route("/dashboard/<session_id>", methods=['GET', 'POST'])
+def dashboard(session_id):
+    #use the session id to gather all information about the user to display it on dashboard
+    return render_template('dashboard.html')
 
 if __name__ == "__main__":
     app.run()
