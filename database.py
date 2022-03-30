@@ -1,24 +1,18 @@
 import sqlite3
-from flask import _app_ctx_stack
 
-DATABASE = 'database.db'
+DATABASE = 'database.sqlite'
+
+def get_db():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
 
 def init_db():
     db = get_db()
     with open('schema.sql') as f:
         db.cursor().executescript(f.read())
     db.commit()
-
-def get_db():
-    top = _app_ctx_stack.top
-    if not hasattr(top, 'sqlite_db'):
-        top.sqlite_db = sqlite3.connect(DATABASE)
-    return top.sqlite_db
-
-def close_connection(exception):
-    top = _app_ctx_stack.top
-    if hasattr(top, 'sqlite_db'):
-        top.sqlite_db.close()
+    db.close()
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
@@ -31,3 +25,14 @@ def mutate_db(mutation, args=()):
     cur = db.execute(mutation, args)
     db.commit()
     cur.close()
+
+def main():
+    # example on how to use the database functions
+    #init_db()
+    #mutate_db('INSERT INTO USERS VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', [1, 'john', 'doe', 'example@mail.com', 'joe', 'abcd', None, None, None])
+    users = query_db('SELECT * FROM USERS')
+    for value in users:
+        print(dict(value))
+
+if __name__ == '__main__':
+    main()
