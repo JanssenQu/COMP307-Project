@@ -1,8 +1,16 @@
 # COMP307-Project
-Final Project for COMP 307 using HTML/CSS/JS/Python/PostgreSQL
-* created by: 
-  * Janssen Qu
-  * Zhongyu Zheng
-  * Inès Rabiey
+Final Project for COMP 307.
 
-Simply type `python index.py` to run the code!
+## Our Stack
+* Frontend: HTML, CSS, JS 
+* Backend: Python, Flask
+* Database: SQLite
+
+## How To Run
+
+Simply run `index.py` to launch the website on localhost!
+
+## Contributors
+ * Janssen Qu
+ * Zhongyu Zheng
+ * Inès Rabiey
