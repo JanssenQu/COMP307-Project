@@ -1,21 +1,97 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body>
-    <form action="{{ url_for('login') }}" method="POST">
-        <h1>Login</h1>
+  <head>
+    <title>A-TA Log In</title>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
 
-        <label for="usrname"><b>Username</b></label><br>
-        <input type="text" placeholder="Enter Username" name="usrname" id="usrname" required>
+      p{
+        margin: 0%;
+      }
+
+      .ellipse{
+        position: absolute;
+        width: 45%;
+        height: 100%;
+        background: #93B9E8;
+      }
+
+      .form {
+        vertical-align: top;
+        padding-left: 45%;
+      }
+
+      input[type=text], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=password], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      .button {
+        width: 120px;
+        font-size: 15px;
+        background-color: #C24C7C;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      .button:hover {
+      background-color: #F6A72E;
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #F3F7FD;">
+    <div class="ellipse" style="color: white; margin: 0%;">
+      <div style="display: flex;"><p style="padding-top: 60px; padding-left: 5%; font-size: 100px;">A-TA</p> <p style="font-size: small; padding-top: 140px;"> &nbsp Assisting Teaching Assistants</p></div>
+      <br><p style="padding-left: 5%; font-size: 40px; color: #3375BF;"><b>The Platform that Links TAs, Students <br>and Teachers Into a Safe Space.</b></p>
+      <br><p style="padding-left: 5%;">TA management, TA Administration, TA rating and more...</p>
+      <img src="Landingpageicon.png" style="padding-left: 15%; padding-top: 60px;">
+    </div>
+    <div class="form">
+      <form action="{{ url_for('login') }}" method="POST">
+        <p style="color: #0F2233; float: right; padding-top: 10px; padding-right: 10px;">Don't have an account?  <a href="{{url_for('register')}}" > Sign Up here!</a></p>
+
+
+        <h1 style="padding-top: 25%; text-align: center;">Welcome Back to A-TA !</h1>
+        <h1 style="text-align: center;">Log In to Your Workspace</h1>
+
+        <label for="usrname"><p style="font-family: Garamond; padding-top: 5%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
+        <div style="padding-left: 30%;"><input type="text" placeholder="Enter Username" name="usrname" id="usrname" required></div>
+        <label for="psw"><p style="font-family: Garamond; padding-top: 5%; font-size: 20px; padding-left: 30%;">Password</p></label><br>
+        <div style="padding-left: 30%;"><input type="password" placeholder="Enter Password" name="psw" id="psw" required></div>
+
         <br><br>
-
-        <label for="psw"><b>Password</b></label><br>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-        <br><br>
-
-        <button type="submit">Login</button>
-    </form>
-    <div>{{msg}}</div>
-    <p>Dont't have an account?  <a href="{{url_for('register')}}"> Sign Up here!</a></p>
+        <div style="padding-left: 45%;"><button type="submit" class="button" >Login</button></div>
+      </form>
+      <div style="padding-left: 48%;">{{msg}}</div>
+      
+    </div>
   </body>
 </html>
