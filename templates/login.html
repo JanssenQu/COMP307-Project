@@ -119,7 +119,7 @@
         <div style="display: flex;"><p style="padding-top: 60px; padding-left: 5%; font-size: 100px;">A-TA</p> <p style="font-size: small; padding-top: 140px;"> &nbsp Assisting Teaching Assistants</p></div>
         <br><p style="padding-left: 5%; font-size: 40px; color: #3375BF;"><b>The Platform that Links TAs, Students <br>and Teachers Into a Safe Space.</b></p>
         <br><p style="padding-left: 5%;">TA management, TA Administration, TA rating and more...</p>
-        <img src="Landingpageicon.png" style="padding-left: 15%; padding-top: 60px; width: 63.5%;">
+        <img src="{{url_for('static', filename='Landingpageicon.png')}}" style="padding-left: 15%; padding-top: 60px; width: 63.5%;">
       </div>
       <div class="form">
         <form action="{{ url_for('login') }}" method="POST">
@@ -142,7 +142,7 @@
     </div>
     <div class="ellipsetabletandphone tabletandphone">
       <div style="display: flex; padding-top: 2%; padding-left: 3%;"><p style="color: white; font-size: 40px;">A-TA <span style="color: #3375BF; font-size: 40px">&nbsp The platform that links TAs, Students and Teachers into a safe space.</span></p></div>
-      <img src="Landingpageicon.png" style=" padding-top: -20%; width: 45%;" class="imgcenter">
+      <img src="{{url_for('static', filename='Landingpageicon.png')}}" style=" padding-top: -20%; width: 45%;" class="imgcenter">
       <h1 style="text-align: center; padding-top: 45px;">Welcome Back to A-TA !</h1>
       <h1 style="text-align: center;">Log In to Your Workspace</h1>
       <label for="usrname"><p style="font-family: Garamond; padding-top: 2%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
