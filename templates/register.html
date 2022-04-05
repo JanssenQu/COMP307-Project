@@ -1,51 +1,249 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body>
-    <form action="{{ url_for('register') }}" method="POST">
-        <h1>Register</h1>
+  <head>
+    <title>A-TA Register</title>
+    <script>
+      if(device-width <= 428){
+        document.write('<meta name="viewport" content="width=428">');
+      }
+      else if(device-width > 428 && device-width <= 1024){
+        document.write('<meta name="viewport" content="width=1024" >');
+        }
+      else{
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      }
+    </script>
+    <style>
 
-        <label for="usrname"><b>Username</b></label><br>
-        <input type="text" placeholder="Enter Username" name="usrname" id="usrname" required>
-        <br><br>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
 
-        <label for="psw"><b>Password</b></label><br>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-        <br><br>
+      p{
+        margin: 0%;
+      }
 
-        <label for="email"><b>Email</b></label><br>
-        <input type="email" placeholder="Enter email" name="email" id="email" required>
-        <br><br>
+      .ellipse{
+        position: absolute;
+        width: 45%;
+        height: 100%;
+        background: #93B9E8;
+      }
 
-        <label for="uid"><b>Student ID</b></label><br>
-        <input type="number" placeholder="Enter User id" name="uid" id="uid" required>
-        <br><br>
+      .form{
+        vertical-align: top;
+        padding-left: 45%;
+      }
 
-        <label for="fname"><b>First Name</b></label><br>
-        <input type="text" placeholder="Enter First Name" name="fname" id="fname" required>
-        <br><br>
+      input[type=text], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
 
-        <label for="lname"><b>Last Name</b></label><br>
-        <input type="text" placeholder="Enter Last Name" name="lname" id="lname" required>
-        <br><br>
+      input[type=password], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
 
-        <b>I'm a</b><br>
-        <input type="checkbox" id="student" name="student" value="Student">
-        <label for="student"> Student </label><br>
+      input[type=email], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=number], select {
+        width: 56%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=checkbox], select{
+        display: inline-block;
+      }
+
+      .button {
+        width: 120px;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+      }
+
+      .button:hover {
+      background-color: #C24C7C;
+      }
+
+      .tabletandphone{
+        width: auto;
+      }
+
+      .ellipsetabletandphone{
+        position: absolute;
+        background: #93B9E8;
+        width: 100%;
+        height: 45%;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .tabletandphone {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+    </style>
+  </head>
+  <body style="background-color: #F3F7FD;">
+    <div class="desktop">
+      <div class="ellipse" style="color: white; margin: 0%;">
+        <div style="display: flex;"><p style="padding-top: 60px; padding-left: 5%; font-size: 100px;">A-TA</p> <p style="font-size: small; padding-top: 140px;"> &nbsp Assisting Teaching Assistants</p></div>
+        <br><p style="padding-left: 5%; font-size: 40px; color: #3375BF;"><b>The Platform that Links TAs, Students <br>and Teachers Into a Safe Space.</b></p>
+        <br><p style="padding-left: 5%;">TA management, TA Administration, TA rating and more...</p>
+        <img src="{{url_for('static', filename='Landingpageicon.png')}}" style="padding-left: 15%; padding-top: 60px;  width: 63.5%;">
+      </div>
+      <div class="form">
+        <form action="{{ url_for('register') }}" method="POST">
+          <p style="color: #0F2233; float: right; padding-top: 10px; padding-right: 10px;">Already Registered?  <a href="{{ url_for('login') }}" > Log In</a></p>
+            <h1 style="text-align: center; padding-top: 4%;">Sign Up Now !</h1>
+            <h2 style="text-align: center;">Create an Account to Start and Explore a Workspace</h2>
+
+            <label for="usrname"><p style="font-family: Garamond; padding-top: 3%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
+            <div style="padding-left: 30%;"><input type="text" placeholder="Enter Username" name="usrname" id="usrname" required></div>
+            <br>
+
+            <label for="psw"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Password</p></label><br>
+            <div style="padding-left: 30%;"><input type="password" placeholder="Enter Password" name="psw" id="psw" required></div>
+            <br>
+
+            <label for="email"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Email</p></label><br>
+            <div style="padding-left: 30%;"><input type="email" placeholder="Enter email" name="email" id="email" required></div>
+            <br>
+
+            <label for="uid"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Student ID</p></label><br>
+            <div style="padding-left: 30%;"><input type="number" placeholder="Enter User id" name="uid" id="uid" required></div>
+            <br>
+
+            <label for="fname"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">First Name</p></label><br>
+            <div style="padding-left: 30%;"><input type="text" placeholder="Enter First Name" name="fname" id="fname" required></div>
+            <br>
+
+            <label for="lname"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Last Name</p></label><br>
+            <div style="padding-left: 30%;"><input type="text" placeholder="Enter Last Name" name="lname" id="lname" required></div>
+            <br>
+
+            <p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">I'm a: </p><br>
+            <div style="text-align: center;"><input type="checkbox" id="student" name="student" value="Student">
+            <label for="student"> Student &nbsp </label>
+
+            <input type="checkbox" id="ta" name="ta" value="TA">
+            <label for="ta"> TA &nbsp </label>
+
+            <input type="checkbox" id="prof" name="prof" value="Prof">
+            <label for="prof"> Prof &nbsp </label>
+
+            <input type="checkbox" id="admin" name="admin" value="Admin">
+            <label for="admin"> Admin &nbsp</label>
+
+            <input type="checkbox" id="sysop" name="sysop" value="Sysop">
+            <label for="sysop"> Sysop</label><br><br></div>
+
+            <div style="padding-left: 45%;"><button type="submit" class="button">Sign Up !</button></div>
+        </form>
+      </div>
+    </div>
+    <div class="tabletandphone ellipsetabletandphone">
+      <div style="display: flex; padding-top: 2%; padding-left: 3%;"><p style="color: white; font-size: 40px;">A-TA <span style="color: #3375BF; font-size: 40px">&nbsp The platform that links TAs, Students and Teachers into a safe space.</span></p></div>
+      <img src="{{url_for('static', filename='Landingpageicon.png')}}" style=" padding-top: -20%; width: 45%;" class="imgcenter">
+      <h1 style="text-align: center; padding-top: 45px;">Sign Up Now !</h1>
+      <h2 style="text-align: center;">Create an Account to Start and Explore a Workspace</h2>
+      <form action="{{ url_for('register') }}" method="POST">
+        <label for="usrname"><p style="font-family: Garamond; padding-top: 3%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
+        <div style="padding-left: 30%;"><input type="text" placeholder="Enter Username" name="usrname" id="usrname" required></div>
+        <br>
+
+        <label for="psw"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Password</p></label><br>
+        <div style="padding-left: 30%;"><input type="password" placeholder="Enter Password" name="psw" id="psw" required></div>
+        <br>
+
+        <label for="email"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Email</p></label><br>
+        <div style="padding-left: 30%;"><input type="email" placeholder="Enter email" name="email" id="email" required></div>
+        <br>
+
+        <label for="uid"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Student ID</p></label><br>
+        <div style="padding-left: 30%;"><input type="number" placeholder="Enter User id" name="uid" id="uid" required></div>
+        <br>
+
+        <label for="fname"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">First Name</p></label><br>
+        <div style="padding-left: 30%;"><input type="text" placeholder="Enter First Name" name="fname" id="fname" required></div>
+        <br>
+
+        <label for="lname"><p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">Last Name</p></label><br>
+        <div style="padding-left: 30%;"><input type="text" placeholder="Enter Last Name" name="lname" id="lname" required></div>
+        <br>
+
+        <p style="font-family: Garamond; font-size: 20px; padding-left: 30%;">I'm a: </p><br>
+        <div style="text-align: center;"><input type="checkbox" id="student" name="student" value="Student">
+        <label for="student"> Student &nbsp </label>
 
         <input type="checkbox" id="ta" name="ta" value="TA">
-        <label for="ta"> TA </label><br>
+        <label for="ta"> TA &nbsp </label>
 
         <input type="checkbox" id="prof" name="prof" value="Prof">
-        <label for="prof"> Prof </label><br>
+        <label for="prof"> Prof &nbsp </label>
 
         <input type="checkbox" id="admin" name="admin" value="Admin">
-        <label for="admin"> Admin</label><br>
+        <label for="admin"> Admin &nbsp</label>
 
         <input type="checkbox" id="sysop" name="sysop" value="Sysop">
-        <label for="sysop"> Sysop</label><br><br>
+        <label for="sysop"> Sysop</label><br><br></div>
 
-        <button type="submit">Register</button>
-    </form>
+        <div style="padding-left: 43.5%;"><button type="submit" class="button">Sign Up !</button></div><br>
+        <p style="color: #0F2233; text-align: center;"><a href="{{ url_for('login') }}" > Log In</a></p>
+        <br>
+      </form>
+    </div>
   </body>
 </html>

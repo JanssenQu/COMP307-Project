@@ -137,7 +137,7 @@
           <br><br>
           <div style="padding-left: 45%;"><button type="submit" class="button" >Login</button></div>
         </form>
-        <div style="text-align: center;">{{msg}}</div>
+        <div style="text-align: center; color: red;">{{msg}}</div>
       </div>
     </div>
     <div class="ellipsetabletandphone tabletandphone">
@@ -145,15 +145,16 @@
       <img src="{{url_for('static', filename='Landingpageicon.png')}}" style=" padding-top: -20%; width: 45%;" class="imgcenter">
       <h1 style="text-align: center; padding-top: 45px;">Welcome Back to A-TA !</h1>
       <h1 style="text-align: center;">Log In to Your Workspace</h1>
-      <label for="usrname"><p style="font-family: Garamond; padding-top: 2%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
-          <div style="padding-left: 30%;"><input type="text" placeholder="Enter Username" name="usrname" id="usrname" required></div>
-          <label for="psw"><p style="font-family: Garamond; padding-top: 2%; font-size: 20px; padding-left: 30%;">Password</p></label><br>
-          <div style="padding-left: 30%;"><input type="password" placeholder="Enter Password" name="psw" id="psw" required></div>
-          <br>
-          <div style="padding-left: 45%;"><button type="submit" class="button" >Login</button></div>
-        </form>
-        <div style="text-align: center;">{{msg}}</div>
-        <p style="color: #0F2233; text-align: center;" class="tabletandphone">Don't have an account?  <a href="{{url_for('register')}}" > Sign Up here!</a></p>
+      <form action="{{ url_for('login') }}" method="POST">
+        <label for="usrname"><p style="font-family: Garamond; padding-top: 2%; font-size: 20px; padding-left: 30%;">Username</p></label><br>
+        <div style="padding-left: 30%;"><input type="text" placeholder="Enter Username" name="usrname" id="usrname" required></div>
+        <label for="psw"><p style="font-family: Garamond; padding-top: 2%; font-size: 20px; padding-left: 30%;">Password</p></label><br>
+        <div style="padding-left: 30%;"><input type="password" placeholder="Enter Password" name="psw" id="psw" required></div>
+        <br>
+        <div style="padding-left: 45%;"><button type="submit" class="button" >Login</button></div>
+      </form>
+      <div style="text-align: center; color: red;">{{msg}}</div>
+      <p style="color: #0F2233; text-align: center;" class="tabletandphone">Don't have an account?  <a href="{{url_for('register')}}" > Sign Up here!</a></p>
     </div>
   </body>
 </html>
