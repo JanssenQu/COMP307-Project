@@ -23,18 +23,19 @@ CREATE TABLE sys_ops (
 );
 
 CREATE TABLE students (
+    user_id integer,
     student_id integer,
     grad BIT,
     supervisor_name text,
     degree text,
-    PRIMARY KEY (student_id),
-    FOREIGN KEY (student_id) REFERENCES users (user_id)
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 
 CREATE TABLE tas (
     ta_id integer,
     PRIMARY KEY (ta_id),
-    FOREIGN KEY (ta_id) REFERENCES students (student_id)
+    FOREIGN KEY (ta_id) REFERENCES students (user_id)
 );
 
 CREATE TABLE profs (
@@ -76,25 +77,25 @@ CREATE TABLE ta_courses (
 );
 
 CREATE TABLE registered_courses (
-    student_id integer,
+    user_id integer,
     course_id integer NOT NULL,
     course_term text NOT NULL,
-    PRIMARY KEY (student_id, course_id, course_term),
-    FOREIGN KEY (student_id) REFERENCES students (student_id),
+    PRIMARY KEY (user_id, course_id, course_term),
+    FOREIGN KEY (user_id) REFERENCES students (user_id),
     FOREIGN KEY (course_id, course_term) REFERENCES course_terms (course_id, course_term)
 );
 
 CREATE TABLE ta_reviews (
     review_id integer,
     ta_id integer NOT NULL,
-    student_id integer NOT NULL,
+    user_id integer NOT NULL,
     course_id integer NOT NULL,
     course_term NOT NULL,
     rating integer NOT NULL,
     review_desc text,
     PRIMARY KEY (review_id),
     FOREIGN KEY (ta_id) REFERENCES ta_reviews (ta_id),
-    FOREIGN KEY (student_id) REFERENCES students (student_id),
+    FOREIGN KEY (user_id) REFERENCES students (user_id),
     FOREIGN KEY (course_id, course_term) REFERENCES course_terms (course_id, course_term)
 );
 
