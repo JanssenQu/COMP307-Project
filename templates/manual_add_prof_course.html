@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<a href="/sysop_tasks/">Back to Sysop Tasks</a>
+
+<h1>Add an Instructor for a Course</h1>
+<p>The instructor must be registered to be added</p>
+
+<form action="{{ url_for('manual_add_prof_course') }}" method="POST">
+  <label for="term_month_year">Term:</label><br>
+  <input type="text" id="term_month_year" name="term_month_year"><br>
+  <label for="course_num">Course Number:</label><br>
+  <input type="text" id="course_num" name="course_num"><br>
+  <label for="course_name">Course Name:</label><br>
+  <input type="text" id="course_name" name="course_name"><br>
+  <label for="instructor_assigned_name">Instructor Name:</label><br>
+  <input type="text" id="instructor_assigned_name" name="instructor_assigned_name"><br><br>
+  <input type="submit" value="Add">
+</form>
+<div style="text-align: center; color: red;">{{msg}}</div>
+
+</body>
+</html>
