@@ -146,11 +146,10 @@ CREATE TABLE ta_applied_courses (
 );
 
 CREATE TABLE sessions (
-    session_id integer,
+    session_id text,
     user_id integer,
-    session_start text,
-    session_expiry text,
-    logged_in BIT,
+    expiry_date text,
+    last_activity text,
     PRIMARY KEY (session_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );

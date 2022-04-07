@@ -1,6 +1,6 @@
-from unicodedata import name
 from flask import Flask, redirect, url_for, render_template, request
 from database import *
+from session import *
 
 app = Flask(__name__)
 
@@ -14,10 +14,10 @@ def login():
     if request.method == 'POST':
         usr = request.form['usrname']
         pwd = request.form['psw']  # todo encrypt the password
-        id = query_db('SELECT user_id FROM users WHERE username = ? AND password = ?', [usr, pwd])
-        if id:
-            #create session entry and pass it to dashboard
-            return redirect(url_for("dashboard", session_id=1234))
+        user = query_db('SELECT user_id FROM users WHERE username = ? AND password = ?', [usr, pwd], True)
+        if user:
+            session_key = create_session(user['user_id'])
+            return redirect(url_for("dashboard", session_id = session_key))
         else:
             msg = 'Wrong username or password.'
             return render_template('login.html', msg = msg)
@@ -66,9 +66,19 @@ def register():
 
     return render_template('register.html')
 
+@app.route("/dashboard/")
 @app.route("/dashboard/<session_id>", methods=['GET', 'POST'])
-def dashboard(session_id):
-    #use the session id to gather all information about the user to display it on dashboard
+def dashboard(session_id=None):
+    if session_id is None:
+        return redirect(url_for("login"))
+    new_session = verify_session(session_id)
+    if new_session is None:
+        return redirect(url_for("login"))
+    elif new_session != session_id:
+        return redirect(url_for("dashboard", session_id = new_session))
+
+    # use the session id to gather all information about the user to display it on dashboard
+
     return render_template('dashboard.html')
 
 if __name__ == "__main__":
