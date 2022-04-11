@@ -1,9 +1,17 @@
 from datetime import datetime, timedelta
 from database import *
 import secrets
+import enum
 
 EXPIRY_TIME = timedelta(minutes = 10)
 TIMEOUT = timedelta(minutes = 30)
+
+class User(enum.Enum):
+    admin = "admins"
+    sys_op = "sys_ops"
+    student = "students"
+    ta = "tas"
+    prof = "profs"
 
 def generate_key():
     return secrets.token_urlsafe(16)
@@ -35,78 +43,37 @@ def verify_session(session_id):
         return session_id
 
 
+def get_user_id(session_id):
+    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
+    user_id = None
+    for value in query:
+        user_id = dict(value).get("user_id")
+    return user_id
+
+
 def has_access_to_orange(session_id):
-    return is_admin(session_id) or is_sysop(session_id)
+    return check_group(User.admin,session_id) or check_group(User.sys_op,session_id)
 
 
 def has_access_to_blue(session_id):
-    return is_prof(session_id) or is_admin(session_id) or is_ta(session_id) or is_sysop(session_id)
+    return check_group(User.prof,session_id) or check_group(User.admin,session_id) or check_group(User.ta,session_id) or check_group(User.sys_op,session_id)
 
 
-def is_prof(session_id):
-    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
-    user_id = None
-    for value in query:
-        user_id = dict(value).get("user_id")
+def check_group(user_group,session_id):
+    '''
+    Verify if the user with the session id is in user_group
+    :param user_group: User enum
+    :param session_id: session_id of the user
+    :return: True if the user is part of the group
+    '''
 
+    user_id = get_user_id(session_id)
     if user_id is None:
         return False
 
-    query = query_db(f"Select user_id FROM profs WHERE user_id = {user_id} ")
-    is_prof = None
+    query = query_db(f"Select user_id FROM {user_group.value} WHERE user_id = {user_id} ")
+    in_group = None
     for value in query:
-        is_prof = dict(value).get("user_id")
+        in_group = dict(value).get("user_id")
 
-    return is_prof is not None
-
-
-
-def is_sysop(session_id):
-    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
-    user_id = None
-    for value in query:
-        user_id = dict(value).get("user_id")
-
-    if user_id is None:
-        return False
-
-    query = query_db(f"Select user_id FROM sys_ops WHERE user_id = {user_id} ")
-    is_sysop = None
-    for value in query:
-        is_sysop = dict(value).get("user_id")
-
-    return is_sysop is not None
-
-
-def is_ta(session_id):
-    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
-    user_id = None
-    for value in query:
-        user_id = dict(value).get("user_id")
-
-    if user_id is None:
-        return False
-
-    query = query_db(f"Select user_id FROM tas WHERE user_id = {user_id} ")
-    is_ta = None
-    for value in query:
-        is_ta = dict(value).get("user_id")
-
-    return is_ta is not None
-
-
-def is_admin(session_id):
-    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
-    user_id = None
-    for value in query:
-        user_id = dict(value).get("user_id")
-
-    if user_id is None:
-        return False
-
-    query = query_db(f"Select user_id FROM admins WHERE user_id = {user_id} ")
-    is_admin = None
-    for value in query:
-        is_admin = dict(value).get("user_id")
-
-    return is_admin is not None
+    return in_group is not None

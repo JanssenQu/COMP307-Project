@@ -1,6 +1,8 @@
 from database import *
+from session import *
 
 
+# returns the course id of the selected course in the dropdown in select course to be passed in the url
 def get_course_id(course_num):
     query = query_db(f"Select course_id FROM courses WHERE course_num = '{course_num}'")
     course_id = None
@@ -9,6 +11,10 @@ def get_course_id(course_num):
     return course_id
 
 
+# below is for select course
+
+# currently using get_all_courses() for select course
+# we might use get_courses(session_id) instead if we want to use get_courses(session_id)
 def get_all_courses():
     query = query_db(f"Select course_name, course_num FROM courses ")
     course_num_list = []
@@ -18,13 +24,10 @@ def get_all_courses():
     return course_num_list
 
 
+# work on it later if needed
+# not tested might replace get_all_courses() might want to change return type to tuples or dict
 def get_courses(session_id):
-    query_id = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
-    user_id = None
-    for value in query_id:
-        user_id = dict(value).get("user_id")
-
-
+    user_id = get_user_id(session_id)
     course_id_list = []
 
     query_teaching_courses = query_db(f"Select course_id FROM teaching_courses WHERE user_id = '{user_id}'")
@@ -40,6 +43,7 @@ def get_courses(session_id):
             course_id_list.append(course_id)
 
     course_num_list = []
-    for course_id in course_id_list:
+    for course_id in course_id_list: # append the course_num
         return
-    return
+
+    return course_id_list, course_num_list

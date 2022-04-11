@@ -1,11 +1,11 @@
 from flask import Flask, redirect, url_for, render_template, request
 from database import *
 from session import *
-from user_and_yellow_helpers import *
-from green_helpers import *
+from user_registration_and_yellow_helpers import *
+from rate_ta_helper import *
 from blue_helpers import *
-import csv
-import os
+
+
 
 
 app = Flask(__name__)
@@ -83,7 +83,7 @@ def dashboard(session_id=None):
         ta_management = "TA Management"
 
     sysop_tasks =''
-    if is_sysop(session_id):
+    if check_group(User.sys_op, session_id):
         sysop_tasks = "Sysop Tasks"
 
     return render_template('dashboard.html', session_id=session_id, ta_admin=ta_admin, ta_management=ta_management, sysop_tasks=sysop_tasks)
@@ -100,7 +100,7 @@ def rate_ta(session_id=None):
     elif new_session != session_id:
         return redirect(url_for("rate_ta", session_id = new_session))
 
-    script = script_string(str(create_form()))
+    script = rate_ta_dependent_dropdown_script()
 
     if request.method == 'POST':
         course_num = request.form['course']
@@ -177,13 +177,12 @@ def ta_management_dashboard(session_id=None, course_id=None, course_num=None):
     if has_access_to_blue(session_id):
         # use the session id to gather all information about the user to display it on dashboard
         perf_log = ''
-        if is_prof(session_id):
+        if check_group(User.prof, session_id):
             perf_log = "TA Performance Log"
 
         wish_list = ''
-        if is_prof(session_id):
+        if check_group(User.prof, session_id):
             wish_list = "TA Wish List"
-
 
         if request.method == 'POST':
             return render_template('ta_management_dashboard.html', session_id=session_id,course_id=course_id, course_num=course_num, perf_log=perf_log, wish_list=wish_list)
@@ -203,10 +202,10 @@ def perf_log(session_id=None, course_id=None, course_num=None):
     if new_session is None:
         return redirect(url_for("login"))
     elif new_session != session_id:  # user's session will be updated
-        if is_prof(session_id):
+        if check_group(User.prof, session_id):
             return redirect(url_for("ta_management", session_id=new_session))
         return redirect(url_for("dashboard", session_id=new_session))
-    if is_prof(session_id):
+    if check_group(User.prof, session_id):
         return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num)
     return redirect(url_for("dashboard", session_id=session_id))
 
@@ -221,10 +220,10 @@ def wishlist(session_id=None, course_id=None, course_num=None):
     if new_session is None:
         return redirect(url_for("login"))
     elif new_session != session_id:  # user's expired session will be updated
-        if is_prof(session_id):
+        if check_group(User.prof, session_id):
             return redirect(url_for("ta_management", session_id=new_session))
         return redirect(url_for("dashboard", session_id=new_session))
-    if is_prof(session_id):
+    if check_group(User.prof, session_id):
         return render_template('wishlist.html', session_id=session_id,course_id=course_id, course_num=course_num)
 
     return redirect(url_for("dashboard", session_id=session_id))
@@ -242,10 +241,10 @@ def sysop_tasks(session_id=None):
     if new_session is None:
         return redirect(url_for("login"))
     elif new_session != session_id: # user's session will be updated
-        if is_sysop(session_id):
+        if check_group(User.sys_op, session_id):
             return redirect(url_for("sysop_tasks", session_id=new_session))
         return redirect(url_for("dashboard", session_id=new_session))
-    if is_sysop(session_id):
+    if check_group(User.sys_op, session_id):
         return render_template('sysop_tasks.html', session_id=session_id)
     ### ^ Access check ^ ###
 
@@ -264,8 +263,9 @@ def manage_users(session_id=None):
     elif new_session != session_id:
         return redirect(url_for("manage_users", session_id=new_session))
 
-    if is_sysop(session_id):
+    if check_group(User.sys_op, session_id):
         if request.method == 'POST':
+            # check which submit button was used
             # find user
             if request.form["choice"] == "find":
                 search = request.form['search']
@@ -357,7 +357,7 @@ def manual_add_prof_course(session_id=None):
     elif new_session != session_id:
         return redirect(url_for("manual_add_prof_course", session_id=new_session))
 
-    if is_sysop(session_id):
+    if check_group(User.sys_op, session_id):
         msg = ''
         if request.method == 'POST':
             # get form items
@@ -391,11 +391,10 @@ def import_prof_course(session_id=None):
     elif new_session != session_id:
         return redirect(url_for("import_prof_course", session_id=new_session))
 
-    if is_sysop(session_id):
+    if check_group(User.sys_op, session_id):
         #assumes that prof is already in the users table of the database
         msg = ''
         data = []
-        lines_failed_to_add = []
         if request.method == 'POST':
             if request.files:
                 uploaded_file = request.files['file']
@@ -405,23 +404,7 @@ def import_prof_course(session_id=None):
 
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
-                with open(filepath) as file:
-                    csv_file = csv.reader(file)
-                    for row in csv_file:
-                        # check if in the db
-                        if len(row) == 4:  # check formatting
-                            term_month_year, course_num, course_name, instructor_assigned_name = row[0], row[1], row[2], \
-                                                                                                 row[3]
-                            if term_month_year == 'term_month_year' and course_num == 'course_num' and course_name == 'course_name' and instructor_assigned_name == 'instructor_assigned_name':
-                                continue
-
-                            added = add_prof_course_to_db(term_month_year, course_num, course_name, instructor_assigned_name)
-                            if not added:
-                                lines_failed_to_add.append(row)
-                        else:
-                            lines_failed_to_add.append(row)
-
-                os.remove(filepath)
+                lines_failed_to_add = add_prof_course_cvs_to_db(filepath)
                 msg = 'Data added'
                 if len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. Please verify that the instructor is ' \

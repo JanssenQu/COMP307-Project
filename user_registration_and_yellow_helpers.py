@@ -1,4 +1,23 @@
 from database import *
+import os
+import csv
+
+
+# Below is part of manage users
+def find_users(name):
+    fname, lname = name_splitter(name)
+    user_list = []
+    user_query = query_db(f"Select user_id,first_name,last_name,email,active FROM users "
+                        f"WHERE first_name = '{fname}' OR last_name = '{lname}' OR last_name = '{fname}'"
+                          f"OR username = '{name}'") # we might just get a last name
+    for value in user_query:
+        account_deactivated = "No"
+        if dict(value).get("active") == 0:
+            account_deactivated = "Yes"
+
+        user_list.append( (dict(value).get("user_id"),dict(value).get("first_name"),dict(value).get("last_name"),dict(value).get("email"),account_deactivated))
+
+    return tuple(user_list)
 
 
 def add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, prof, admin, sysop):
@@ -82,23 +101,6 @@ def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, stud
         return False
 
 
-
-def find_users(name):
-    fname, lname = name_splitter(name)
-    user_list = []
-    user_query = query_db(f"Select user_id,first_name,last_name,email,active FROM users "
-                        f"WHERE first_name = '{fname}' OR last_name = '{lname}' OR last_name = '{fname}'"
-                          f"OR username = '{name}'") # we might just get a last name
-    for value in user_query:
-        account_deactivated = "No"
-        if dict(value).get("active") == 0:
-            account_deactivated = "Yes"
-
-        user_list.append( (dict(value).get("user_id"),dict(value).get("first_name"),dict(value).get("last_name"),dict(value).get("email"),account_deactivated))
-
-    return tuple(user_list)
-
-
 def delete_user(user_id):
     try:
         tables = ["users", "admins", "sys_ops", "students", "tas", "profs", "teaching_courses", "ta_courses", "registered_courses","sessions"]
@@ -123,6 +125,32 @@ def reactivate_user(user_id):
         return
 
 
+# Below is part of manual and csv import of prof course
+
+def add_prof_course_cvs_to_db(filepath):
+    lines_failed_to_add = []
+    with open(filepath) as file:
+        csv_file = csv.reader(file)
+        for row in csv_file:
+            # check if in the db
+            if len(row) == 4:  # check formatting
+                term_month_year, course_num, course_name, instructor_assigned_name = row[0], row[1], row[2], \
+                                                                                     row[3]
+                if term_month_year == 'term_month_year' and course_num == 'course_num' and course_name == 'course_name' and instructor_assigned_name == 'instructor_assigned_name':
+                    continue
+
+                added = add_prof_course_to_db(term_month_year, course_num, course_name, instructor_assigned_name)
+                if not added:
+                    lines_failed_to_add.append(row)
+            else:
+                lines_failed_to_add.append(row)
+
+    os.remove(filepath)
+
+    return lines_failed_to_add
+
+
+
 def name_splitter(instructor_assigned_name):
     """
     Separates a full name into first and last name
@@ -139,6 +167,8 @@ def name_splitter(instructor_assigned_name):
 
 def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_assigned_name):
     '''
+    used for manual and csv import of prof courses
+
     if the instructor is registered in the db
     Add the instructor, course and term to the teaching_courses table
     and if the course or term is not in the db then it will add them to their corresponding tables
