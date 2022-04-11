@@ -12,7 +12,7 @@ from blue_helpers import *
 app = Flask(__name__)
 
 
-# todo verify user group
+
 # GREEN
 @app.route("/")
 def home():
@@ -23,7 +23,7 @@ def login():
     msg = ''
     if request.method == 'POST':
         usr = request.form['usrname']
-        pwd = request.form['psw']  # todo encrypt the password
+        pwd = request.form['psw']
         user = verify_user(usr, pwd)
         if user:
             session_key = create_session(user['user_id'])
@@ -38,26 +38,20 @@ def login():
 def logout():
     return render_template('logout.html')
 
-# todo update register user group before submission currently choosable to make testing easier
+
 @app.route("/register/", methods=['GET', 'POST'])
 def register():
     msg = ''
     if request.method == 'POST':
         # get form items
-        studentprof_id = int(request.form['uid'])
+        studentprof_id = request.form['uid']
         fname = request.form['fname']
         lname = request.form['lname']
         email = request.form['email']
         usrname = request.form['usrname']
-        pwd = request.form['psw']  # todo encrypt the password
-        # checkboxes
-        student = request.form.getlist('student')  # empty list if not checked "Student" if checked
-        ta = request.form.getlist('ta')
-        prof = request.form.getlist('prof')
-        admin = request.form.getlist('admin')
-        sysop = request.form.getlist('sysop')
+        pwd = request.form['psw']
 
-        if add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, prof, admin, sysop):
+        if register_user(studentprof_id, fname, lname, email, usrname, pwd):
             return redirect(url_for("login"))
         else:
             msg = 'The student ID, username or email has already been registered.' \
@@ -295,8 +289,8 @@ def manage_users(session_id=None):
                 fname = request.form['fname']
                 lname = request.form['lname']
                 email = request.form['email']
-                usrname = request.form['usrname_add']
-                pwd = request.form['psw']  # todo encrypt the password
+                usrname = None
+                pwd = None
                 # checkboxes
                 student = request.form.getlist('student')  # empty list if not checked "Student" if checked
                 ta = request.form.getlist('ta')
@@ -320,7 +314,7 @@ def manage_users(session_id=None):
                 lname = request.form['lname_update']
                 email = request.form['email_update']
                 usrname = request.form['usrname_update']
-                pwd = request.form['psw_update']  # todo encrypt the password
+                pwd = request.form['psw_update']
                 # checkboxes
                 student = request.form.getlist('student_update')  # empty list if not checked "Student" if checked
                 ta = request.form.getlist('ta_update')
