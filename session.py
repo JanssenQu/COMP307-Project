@@ -33,3 +33,80 @@ def verify_session(session_id):
     else:
         mutate_db('UPDATE sessions SET last_activity = ? WHERE session_id = ?', [now, session_id])
         return session_id
+
+
+def has_access_to_orange(session_id):
+    return is_admin(session_id) or is_sysop(session_id)
+
+
+def has_access_to_blue(session_id):
+    return is_prof(session_id) or is_admin(session_id) or is_ta(session_id) or is_sysop(session_id)
+
+
+def is_prof(session_id):
+    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
+    user_id = None
+    for value in query:
+        user_id = dict(value).get("user_id")
+
+    if user_id is None:
+        return False
+
+    query = query_db(f"Select user_id FROM profs WHERE user_id = {user_id} ")
+    is_prof = None
+    for value in query:
+        is_prof = dict(value).get("user_id")
+
+    return is_prof is not None
+
+
+
+def is_sysop(session_id):
+    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
+    user_id = None
+    for value in query:
+        user_id = dict(value).get("user_id")
+
+    if user_id is None:
+        return False
+
+    query = query_db(f"Select user_id FROM sys_ops WHERE user_id = {user_id} ")
+    is_sysop = None
+    for value in query:
+        is_sysop = dict(value).get("user_id")
+
+    return is_sysop is not None
+
+
+def is_ta(session_id):
+    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
+    user_id = None
+    for value in query:
+        user_id = dict(value).get("user_id")
+
+    if user_id is None:
+        return False
+
+    query = query_db(f"Select user_id FROM tas WHERE user_id = {user_id} ")
+    is_ta = None
+    for value in query:
+        is_ta = dict(value).get("user_id")
+
+    return is_ta is not None
+
+
+def is_admin(session_id):
+    query = query_db(f"Select user_id FROM sessions WHERE session_id = '{session_id}' ")
+    user_id = None
+    for value in query:
+        user_id = dict(value).get("user_id")
+
+    if user_id is None:
+        return False
+
+    query = query_db(f"Select user_id FROM admins WHERE user_id = {user_id} ")
+    is_admin = None
+    for value in query:
+        is_admin = dict(value).get("user_id")
+
+    return is_admin is not None

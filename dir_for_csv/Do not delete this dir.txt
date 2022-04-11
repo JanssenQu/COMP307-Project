@@ -1,0 +1,3 @@
+Used for importing prof courses with csv
+
+the csv is deleted after use but this directory will be used everytime the sysop imports  prof courses by csv
