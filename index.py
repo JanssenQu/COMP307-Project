@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, render_template, request
 from database import *
+from encryption import *
 from session import *
 from user_registration_and_yellow_helpers import *
 from rate_ta_helper import *
@@ -23,7 +24,7 @@ def login():
     if request.method == 'POST':
         usr = request.form['usrname']
         pwd = request.form['psw']  # todo encrypt the password
-        user = query_db('SELECT user_id FROM users WHERE username = ? AND password = ? AND active = 1', [usr, pwd], True)
+        user = verify_user(usr, pwd)
         if user:
             session_key = create_session(user['user_id'])
             return redirect(url_for("dashboard", session_id=session_key))
@@ -32,6 +33,10 @@ def login():
             return render_template('login.html', msg=msg)
 
     return render_template("login.html")
+
+@app.route("/logout/")
+def logout():
+    return render_template('logout.html')
 
 # todo update register user group before submission currently choosable to make testing easier
 @app.route("/register/", methods=['GET', 'POST'])
@@ -72,6 +77,10 @@ def dashboard(session_id=None):
         return redirect(url_for("login"))
     elif new_session != session_id: # user has a session we update their session
         return redirect(url_for("dashboard", session_id = new_session))
+
+    if request.method == 'POST':
+        delete_session(session_id)
+        return redirect(url_for("logout"))
 
     # use the session id to gather all information about the user to display it on dashboard
     ta_admin =''
