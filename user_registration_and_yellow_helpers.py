@@ -1,6 +1,7 @@
 from database import *
 import os
 import csv
+from encryption import *
 
 
 # Below is part of manage users
@@ -26,8 +27,9 @@ def add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, pro
 
     if not has_email and not has_user:  # email and username has to be unique before adding
         # save to db
+        hashed_pass = hash_password(pwd)
         mutate_db('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                  [None, fname, lname, email, usrname, pwd, None, None, None, True])
+                  [None, fname, lname, email, usrname, hashed_pass, None, None, None, True])
 
         # get the system user_id
         user_id = None
