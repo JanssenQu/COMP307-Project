@@ -1,13 +1,14 @@
+<!--- Need to update don't commit --->
 <!DOCTYPE html>
 <html>
 <body>
 
-<a href="/sysop_tasks/">Back to Sysop Tasks</a>
+<a href="/sysop_tasks/{{session_id}}">Back to Sysop Tasks</a>
 
 <h1>Add an Instructor for a Course</h1>
 <p>The instructor must be registered to be added</p>
 
-<form action="{{ url_for('manual_add_prof_course') }}" method="POST">
+<form action="/manual_add_prof_course/{{session_id}}" method="POST">
   <label for="term_month_year">Term:</label><br>
   <input type="text" id="term_month_year" name="term_month_year"><br>
   <label for="course_num">Course Number:</label><br>

@@ -1,8 +1,10 @@
+<!--- Need to update don't commit --->
+
 <!DOCTYPE html>
 <html>
 
 <body>
-    <a href="/sysop_tasks/">Back to Sysop Tasks</a>
+    <a href="/sysop_tasks/{{session_id}}">Back to Sysop Tasks</a>
 
     <h1>Upload a List of Instructors and Courses</h1>
 
@@ -13,7 +15,7 @@
 
     <p>The instructor must be registered to be added</p>
 
-    <form action="{{ url_for('import_prof_course') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url_for('import_prof_course') }}{{session_id}}" method="POST" enctype="multipart/form-data">
         <label for="file">Select a file:</label>
         <input type="file" id="file" name="file" />
         <br /><br />
