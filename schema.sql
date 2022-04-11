@@ -2,12 +2,12 @@ CREATE TABLE users (
     user_id integer PRIMARY KEY,
     first_name text NOT NULL,
     last_name text NOT NULL,
-    email text NOT NULL UNIQUE,
-    username text NOT NULL UNIQUE,
-    password text NOT NULL,
+    email text,
+    username text,
+    password text,
     location text,
     legal_name text,
-    phone text
+    phone text,
     active integer NOT NULL  -- this is to tell if the user still have an account not for sessions
 );
 

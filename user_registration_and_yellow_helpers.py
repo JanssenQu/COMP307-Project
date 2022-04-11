@@ -4,6 +4,51 @@ import csv
 from encryption import *
 
 
+# registration
+
+def register_user(studentprof_id, fname, lname, email, usrname, pwd):
+    # everyone is either a prof or a student
+    # TA's can be profs or students
+    # admins and sysops are profs
+
+    # find user_id with the right name
+    uid_list = []
+    user_query = query_db(f"Select user_id FROM users WHERE first_name = '{fname}' AND last_name = '{lname}' AND username is NULL AND password IS NULL")
+    for value in user_query:
+        uid_list.append(dict(value).get('user_id'))
+
+    student = False
+    prof = False
+    user_id = None
+    for uid in uid_list:
+        student_id_query = query_db(f"Select user_id FROM students WHERE user_id = {uid} AND student_id = {studentprof_id}")
+        prof_id_query = query_db(f"Select user_id FROM profs WHERE user_id = {uid} AND prof_id = {studentprof_id}")
+        for value in student_id_query:
+            student = True
+            user_id = dict(value).get('user_id')
+
+        for value in prof_id_query:
+            prof = True
+            user_id = dict(value).get('user_id')
+
+    # first check if they are TA, prof, admin, or sysop those users are already in the system we just want to update
+    # the missing info such as the password or username
+    # the user has to have the same name and student/prof id but no username and password
+
+    # use update_user
+    if user_id is not None:
+        groups = {"tas":False,"admins":False,"sys_ops":False}
+        for key in groups:
+            group_query = query_db(f"Select user_id FROM {key} WHERE user_id = {user_id}")
+            for value in group_query:
+                groups[key] = True
+        return update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, student, groups["tas"], prof, groups["admins"], groups["sys_ops"])
+
+    # if not then just add regularly with add_user
+    return add_user(studentprof_id, fname, lname, email, usrname, pwd, student=True, ta=False, prof=False, admin=False, sysop=False)
+
+
+
 # Below is part of manage users
 def find_users(name):
     fname, lname = name_splitter(name)
@@ -27,13 +72,16 @@ def add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, pro
 
     if not has_email and not has_user:  # email and username has to be unique before adding
         # save to db
-        hashed_pass = hash_password(pwd)
+        if pwd is not None:
+            hashed_pass = hash_password(pwd)
+        else:
+            hashed_pass = None
         mutate_db('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                   [None, fname, lname, email, usrname, hashed_pass, None, None, None, True])
 
         # get the system user_id
         user_id = None
-        for value in query_db(f"SELECT user_id FROM users WHERE username='{usrname}'"):
+        for value in query_db(f"SELECT user_id FROM users WHERE email='{email}'"):
             user_id = dict(value).get('user_id')
 
         if student:
@@ -59,6 +107,13 @@ def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, stud
 
     try:
         user_id = int(user_id)
+
+        others_email = query_db(f"SELECT email FROM users WHERE email='{email}' AND user_id != {user_id}")
+        others_username = query_db(f"SELECT username FROM users WHERE username='{usrname}' AND user_id != {user_id}")
+
+        if others_email or others_username:  # email and username has to be unique before adding
+            return False
+
         if studentprof_id != '':
             studentprof_id = int(studentprof_id)
 
@@ -76,7 +131,8 @@ def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, stud
             if not others_username:
                 mutate_db(f"UPDATE users SET username = '{usrname}' WHERE user_id = {user_id}")
         if pwd != '':
-            mutate_db(f"UPDATE users SET password = '{pwd}' WHERE user_id = {user_id}")
+            hashed_pass = hash_password(pwd)
+            mutate_db(f"UPDATE users SET password = '{hashed_pass}' WHERE user_id = {user_id}")
 
         # update user group
         mutate_db(f'DELETE FROM students WHERE user_id = {user_id}')
