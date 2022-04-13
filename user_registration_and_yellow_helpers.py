@@ -217,10 +217,13 @@ def name_splitter(instructor_assigned_name):
     :param instructor_assigned_name: full name of a person
     :return: tuple fname, lname
     """
-    first, *last = instructor_assigned_name.split()
-    fname = first
-    lname = " ".join(last)
-    return fname, lname
+    try:
+        first, *last = instructor_assigned_name.split()
+        fname = first
+        lname = " ".join(last)
+        return fname, lname
+    except ValueError:
+        return '',''
 
 
 def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_assigned_name):
