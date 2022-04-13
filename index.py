@@ -208,8 +208,20 @@ def perf_log(session_id=None, course_id=None, course_num=None):
         if check_group(User.prof, session_id):
             return redirect(url_for("ta_management", session_id=new_session))
         return redirect(url_for("dashboard", session_id=new_session))
+
     if check_group(User.prof, session_id):
-        return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num)
+        course_term_list, ta_name_list = perf_log_dropdown_data(course_id)
+        if request.method == 'POST':
+            prof_id = get_user_id(session_id)
+            course_term = request.form.get('term')
+            ta_name = request.form.get('ta')
+            comment = request.form["perf_log_notes"]
+            ta_id = find_ta(ta_name, course_id, course_term)
+            add_performance_log(prof_id, ta_id, course_id, course_term, comment)
+            return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list,msg="Added")
+
+        return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list)
+
     return redirect(url_for("dashboard", session_id=session_id))
 
 
