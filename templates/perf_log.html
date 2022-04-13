@@ -1,0 +1,27 @@
+<a href="/ta_management_dashboard/{{session_id}}/{{course_id}}>/{{course_num}}">{{course_num}} TA Management Dashboard</a>
+
+<h1>Performance Log for {{course_num}}</h1>
+
+
+
+
+<form action="/perf_log/{{session_id}}" method="POST">
+  <label for="course">TA:</label>
+  <select name="course" id="course">
+    {% for ta in ta_list %}
+    <option value="{{ta}}">{{ta}}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+
+
+  <label for="perf_log_notes">Note:</label><br>
+  <textarea id="perf_log_notes" name="perf_log_notes" rows="4" cols="50">
+
+  </textarea>
+  <br><br>
+  <input type="submit" value="Submit">
+
+</form>
+
+

@@ -1,0 +1,24 @@
+<a href="/ta_management_dashboard/{{session_id}}/{{course_id}}>/{{course_num}}">{{course_num}} TA Management Dashboard</a>
+
+
+
+<h1>{{course_num}} TA Wish List</h1>
+
+
+
+
+<form action="/perf_log/{{session_id}}" method="POST">
+  <label for="course">TA:</label>
+  <select name="course" id="course">
+    {% for ta in ta_list %}
+    <option value="{{ta}}">{{ta}}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+
+
+  </textarea>
+  <br><br>
+  <input type="submit" value="Add TA to Wish List">
+
+</form>

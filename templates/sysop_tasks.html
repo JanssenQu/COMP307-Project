@@ -1,0 +1,25 @@
+<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
+<h1>Sysop Tasks</h1>
+
+<h2>Choose an Option </h2>
+
+
+<a href="/manage_users/{{session_id}}">Manage Users</a><br><br>
+<a href="/import_prof_course/{{session_id}}">CSV Import Prof and Courses</a><br><br>
+<a href="/manual_add_prof_course/{{session_id}}">Manual Import Prof and Courses</a><br><br>
+
+<!--- maybe use buttons instead which ever looks better
+
+<form action="{{ url_for('manage_users') }}" method="GET">
+  <input type="submit" value="Manage Users">
+</form>
+
+<form action="{{ url_for('import_prof_course') }}" method="GET">
+  <input type="submit" value="CSV Import Prof and Courses">
+</form>
+
+<form action="{{ url_for('manual_add_prof_course') }}" method="GET">
+  <input type="submit" value="Manual Import Prof and Courses">
+</form>
+
+--->

@@ -1,0 +1,15 @@
+<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
+<h1>TA Management</h1>
+
+<h1>Select Course</h1>
+
+<form action="/ta_management/{{session_id}}" method="POST">
+  <label for="course">Course:</label>
+  <select name="course" id="course">
+    {% for course in course_list %}
+    <option value="{{course}}">{{course}}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
