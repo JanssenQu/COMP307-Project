@@ -7,10 +7,7 @@ from rate_ta_helper import *
 from blue_helpers import *
 
 
-
-
 app = Flask(__name__)
-
 
 
 # GREEN
@@ -94,31 +91,69 @@ def dashboard(session_id=None):
 
 @app.route("/rate_ta/")
 @app.route("/rate_ta/<session_id>", methods=['GET', 'POST'])
-def rate_ta(session_id=None):
+@app.route("/rate_ta/<session_id>/<course_num>", methods=['GET', 'POST'])
+@app.route("/rate_ta/<session_id>/<course_num>/<course_term>", methods=['GET', 'POST'])
+def rate_ta(session_id=None, course_num=None, course_term=None):
     if session_id is None:
         return redirect(url_for("login"))
     new_session = verify_session(session_id)
     if new_session is None:
         return redirect(url_for("login"))
     elif new_session != session_id:
-        return redirect(url_for("rate_ta", session_id = new_session))
+        return redirect(url_for("dashboard", session_id = new_session))
 
-    script = rate_ta_dependent_dropdown_script()
+    # select course
+    course_list = get_courses_with_tas()
+    if course_num is None and course_term is None:
+        # if clicked on submit
+        if request.method == 'POST':
+            if request.form["choice"] == "choose_course":
+                course_num = request.form.get('course')
+                return redirect(url_for("rate_ta", session_id=session_id, course_num=course_num))
+            # if it did not come from the right form
+            return redirect(url_for("dashboard", session_id=session_id))
+        # else just display select course
+        return render_template('rate_ta_select_course.html', session_id=session_id, course_num=course_num,
+                               course_list=course_list)
 
-    if request.method == 'POST':
-        course_num = request.form['course']
-        term = request.form['term']
-        ta = request.form['ta']
-        stars = request.form['rating']
-        comment = request.form['comment']
+    # select term
+    if course_num is not None and course_term is None:
+        term_list = get_terms_with_tas(course_num)
+        # if clicked on submit
+        if request.method == 'POST':
+            if request.form["choice"] == "choose_term":
+                course_term = request.form.get('term')
+                return redirect(url_for("rate_ta", session_id=session_id, course_num=course_num, course_term=course_term))
+            # if it did not come from the right form
+            return redirect(url_for("dashboard", session_id=session_id))
+        # else just display select course
+        return render_template('rate_ta_select_term.html', session_id=session_id, course_num=course_num,
+                               term_list=term_list)
 
-        try:
-            insert_ta_rating(ta, course_num, term, stars, comment)
-        finally:
-            return render_template('rate_ta.html', session_id=session_id, script=script)
+    # give rating
+    if course_num is not None and course_term is not None:
+        ta_names = get_tas(course_num, course_term)
+        # if clicked on submit
+        if request.method == 'POST':
+            if request.form["choice"] == "rate_ta":
+                ta = request.form['ta']
+                stars = None
+                try:
+                    stars = request.form['rating']
+                except:
+                    return render_template('rate_ta.html', session_id=session_id, course_num=course_num,
+                                           course_term=course_term, ta_names=ta_names, msg="Give a rating")
+                comment = request.form['comment']
+                insert_ta_rating(ta, course_num, course_term, stars, comment)
+                return render_template('rate_ta.html', session_id=session_id, course_num=course_num,
+                                       course_term=course_term, ta_names=ta_names, msg="Submitted")
+            # if it did not come from the right form
+            return redirect(url_for("dashboard", session_id=session_id))
+        # else just display select course
+        return render_template('rate_ta.html', session_id=session_id, course_num=course_num, course_term=course_term, ta_names=ta_names)
 
-    # use the session id to gather all information about the user to display it on dashboard
-    return render_template('rate_ta.html', session_id=session_id, script=script)
+    # if erroneous request
+    return redirect(url_for("dashboard", session_id=session_id))
 
 # ORANGE
 @app.route("/ta_admin/")
@@ -216,7 +251,7 @@ def perf_log(session_id=None, course_id=None, course_num=None):
             course_term = request.form.get('term')
             ta_name = request.form.get('ta')
             comment = request.form["perf_log_notes"]
-            ta_id = find_ta(ta_name, course_id, course_term)
+            ta_id = find_ta_id(ta_name, course_id, course_term)
             add_performance_log(prof_id, ta_id, course_id, course_term, comment)
             return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list,msg="Added")
 
@@ -239,7 +274,22 @@ def wishlist(session_id=None, course_id=None, course_num=None):
             return redirect(url_for("ta_management", session_id=new_session))
         return redirect(url_for("dashboard", session_id=new_session))
     if check_group(User.prof, session_id):
-        return render_template('wishlist.html', session_id=session_id,course_id=course_id, course_num=course_num)
+        term_list = next_two_semester()
+        ta_list = get_ta_applications(course_id)  # todo
+        if request.method == 'POST':
+            prof_id = get_user_id(session_id)
+            course_term = request.form.get('term')
+            ta_name = request.form.get('ta')
+            if ta_name is None:
+                return render_template('wishlist.html', session_id=session_id, course_id=course_id,
+                                       course_num=course_num, term_list=term_list, ta_list=ta_list,
+                                       msg=f"No TA Available")
+
+            ta_id = find_ta_id(ta_name, course_id, course_term)
+            add_to_wishlist(course_id, course_term, prof_id, ta_id)
+            return render_template('wishlist.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=term_list, ta_list=ta_list, msg=f"Added {ta_name}")
+
+        return render_template('wishlist.html', session_id=session_id,course_id=course_id, course_num=course_num,term_list=term_list, ta_list=ta_list)
 
     return redirect(url_for("dashboard", session_id=session_id))
 

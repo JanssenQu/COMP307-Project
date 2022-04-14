@@ -1,0 +1,21 @@
+<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
+
+
+<h1> Rate a TA </h1>
+
+<h2> Choose a Course</h2>
+
+<form action="/rate_ta/{{session_id}}" method="POST">
+  <input type="hidden" name="choice" value="choose_course">
+
+  <label for="course">Course:</label>
+  <select name="course" id="course">
+    {% for course in course_list %}
+    <option value="{{course}}">{{course}}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+  <input type="submit" value="Next">
+</form>
+<div style="text-align: center; color: red;">{{msg}}</div>
+
