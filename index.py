@@ -74,7 +74,7 @@ def rate_ta(session_id=None, course_num=None, course_term=None):
 
 # ORANGE
 @app.route("/ta_admin/")
-@app.route("/ta_admin/<session_id>")
+@app.route("/ta_admin/<session_id>", methods=['GET', 'POST'])
 def ta_admin(session_id=None):
     return page_decorator("ta_admin", ta_admin_post, session_id)
 
