@@ -143,22 +143,22 @@ def perf_log_post(session_id, course_id, course_num):
 
 def wishlist_post(session_id, course_id, course_num):
     if check_group(User.prof, session_id):
-        term_list = next_two_semester()
-        ta_list = get_ta_applications(course_id)  # todo
+        course_term = next_semester()
         if request.method == 'POST':
             prof_id = get_user_id(session_id)
-            course_term = request.form.get('term')
-            ta_name = request.form.get('ta')
-            if ta_name is None:
+            fname = request.form['fname']
+            lname = request.form['lname']
+            ta_id = find_user_id_by_name(fname, lname)
+            if ta_id is None:
                 return render_template('wishlist.html', session_id=session_id, course_id=course_id,
-                                        course_num=course_num, term_list=term_list, ta_list=ta_list,
-                                        msg=f"No TA Available")
+                                       course_num=course_num, msg=f"Register user first", course_term=course_term)
 
-            ta_id = find_ta_id(ta_name, course_id, course_term)
             add_to_wishlist(course_id, course_term, prof_id, ta_id)
-            return render_template('wishlist.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=term_list, ta_list=ta_list, msg=f"Added {ta_name}")
+            return render_template('wishlist.html', session_id=session_id, course_id=course_id, course_num=course_num,
+                                   msg=f"Added {fname} {lname}", course_term=course_term)
 
-        return render_template('wishlist.html', session_id=session_id,course_id=course_id, course_num=course_num,term_list=term_list, ta_list=ta_list)
+        return render_template('wishlist.html', session_id=session_id, course_id=course_id, course_num=course_num,
+                               course_term=course_term)
 
 
 def sysop_tasks_post(session_id):

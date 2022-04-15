@@ -130,18 +130,12 @@ def next_semester():
     return next_semester
 
 
-def find_ta_id_by_name(fname,lname):
+def find_user_id_by_name(fname,lname):
     try:
         query_user_id = query_db(f"Select user_id FROM users WHERE first_name LIKE '{fname}%' AND last_name LIKE '%{lname}'")
         uid_list = list_query_items(query_user_id, "user_id")
 
-        ta_id = None
-        for uid in uid_list:
-            query = query_db(f"Select user_id FROM ta_courses WHERE user_id = {uid}")
-            for value in query:
-                ta_id = dict(value).get("user_id")
-
-        return ta_id
+        return uid_list[0]
     except:
         return None
 
