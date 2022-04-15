@@ -104,7 +104,23 @@ def ta_management_post(session_id, course_id):
 def ta_admin_post(session_id):
     if has_access_to_orange(session_id):
         if request.method == 'POST':
-            return render_template('ta_admin.html', session_id=session_id)
+            if request.files:
+                uploaded_file = request.files['file']
+                if str.lower(uploaded_file.filename[-4:]) != ".csv":
+                    msg = 'Please upload a csv file'
+                    return render_template('ta_admin.html', msg=msg, session_id=session_id)
+
+                filepath = os.path.join('dir_for_csv', uploaded_file.filename)
+                uploaded_file.save(filepath)
+                if request.form['file_type'] == 'course_quota':
+                    lines_failed_to_add = add_course_quota_to_db(filepath)
+                else:
+                    lines_failed_to_add = add_ta_cohort_to_db(filepath)
+                msg = 'Data added'
+                if len(lines_failed_to_add) > 0:
+                    msg = f'Failed to add the following rows {lines_failed_to_add}.'
+
+                return render_template('ta_admin.html', msg=msg, session_id=session_id)
 
         return render_template('ta_admin.html', session_id=session_id)
 

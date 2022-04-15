@@ -31,3 +31,10 @@ def remove_ta():
     '''
 
     return
+
+def add_course_quota_to_db(filepath):
+    return
+
+def add_ta_cohort_to_db(filepath):
+    return
+
