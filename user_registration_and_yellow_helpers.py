@@ -117,7 +117,7 @@ def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, stud
         if studentprof_id != '':
             studentprof_id = int(studentprof_id)
 
-        # update the values that are filled
+        # update the textbox values that have been filled
         if fname != '':
             mutate_db(f"UPDATE users SET first_name = '{fname}' WHERE user_id = {user_id}")
         if lname != '':
@@ -134,13 +134,11 @@ def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, stud
             hashed_pass = hash_password(pwd)
             mutate_db(f"UPDATE users SET password = '{hashed_pass}' WHERE user_id = {user_id}")
 
-        # update user group
-        mutate_db(f'DELETE FROM students WHERE user_id = {user_id}')
-        mutate_db(f'DELETE FROM tas WHERE user_id = {user_id}')
-        mutate_db(f'DELETE FROM profs WHERE user_id = {user_id}')
-        mutate_db(f'DELETE FROM admins WHERE user_id = {user_id}')
-        mutate_db(f'DELETE FROM sys_ops WHERE user_id = {user_id}')
-
+        # update user group, delete from all
+        tables = ["students","tas","profs","admins","sys_ops"]
+        for table in tables:
+            mutate_db(f'DELETE FROM {table} WHERE user_id = {user_id}')
+        # update user group, add new
         if student:
             mutate_db('INSERT INTO students VALUES (?, ?, ?, ?, ?)',
                       [user_id, studentprof_id, None, None, None])
