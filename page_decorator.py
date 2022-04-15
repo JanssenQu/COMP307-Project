@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for
+from orange_helpers import *
 from rate_ta_helper import *
 from session import *
 from user_registration_and_yellow_helpers import *
@@ -114,9 +115,9 @@ def ta_admin_post(session_id):
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
                 if request.form['file_type'] == 'course_quota':
-                    lines_failed_to_add = add_course_quota_to_db(filepath)
+                    lines_failed_to_add = add_csv_to_db(filepath, add_course_quota_to_db)
                 else:
-                    lines_failed_to_add = add_ta_cohort_to_db(filepath)
+                    lines_failed_to_add = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
                 if len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}.'
@@ -342,7 +343,7 @@ def import_prof_course_post(session_id):
 
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
-                lines_failed_to_add = add_prof_course_cvs_to_db(filepath)
+                lines_failed_to_add = add_csv_to_db(filepath, add_prof_course_to_db)
                 msg = 'Data added'
                 if len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. Please verify that the instructor is ' \

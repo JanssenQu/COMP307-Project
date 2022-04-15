@@ -26,7 +26,7 @@ CREATE TABLE sys_ops (
 CREATE TABLE students (
     user_id integer,
     student_id integer,
-    grad BIT,
+    grad_ugrad text,
     supervisor_name text,
     degree text,
     PRIMARY KEY (user_id),
@@ -56,6 +56,8 @@ CREATE TABLE courses (
 CREATE TABLE course_terms (
     course_id integer,
     course_term text NOT NULL,
+    course_enroll_num integer,
+    ta_quota integer,
     PRIMARY KEY (course_id, course_term),
     FOREIGN KEY (course_id) REFERENCES courses (course_id)
 );
