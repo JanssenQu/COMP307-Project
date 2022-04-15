@@ -1,21 +1,149 @@
-<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
+<!DOCTYPE html>
+<html>
+  <head></head>
+    <title>Select Term</title>
+    <script>
+      if(device-width <= 428){
+        document.write('<meta name="viewport" content="width=428">');
+      }
+      else if(device-width > 428 && device-width <= 1024){
+        document.write('<meta name="viewport" content="width=1024" >');
+        }
+      else{
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      }
+    </script>
+    <style>
+
+      *{
+        background-color: #C7DFFA;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .button {
+        width: 200px;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #C24C7C;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .checked {
+        color: orange;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+      .alignleft {
+	      float: left;
+      }
+
+      .alignright {
+	      float: right;
+      }
+      
 
 
-<h1> Rate a TA </h1>
+    </style>
+    <body>
+      
 
-<h2> Choose a Course</h2>
+      <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+      <div class="line"></div>
+      <div id="textbox">
+        <p class="alignleft" style="color: #0F2233; padding-left: 2.5%;">Dashboard > Select Term > <u>Select Course</u> </p>
+        <div style="padding-top: 15px; padding-right: 2%;"  class="alignright"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+      </div>
+      <br><br><br>
+      <img src="{{url_for('static', filename='course.png')}}" style="width: 38%;" class="imgcenter">
+      <h1 style="text-align: center;"> Choose a Course</h1>
+      
+      <div style="text-align: center;">
+        <form action="/rate_ta/{{session_id}}" method="POST">
+          <input type="hidden" name="choice" value="choose_course">
+          <label for="course" style="font-size: 25px; padding-left: 2%;">Course:</label>
+          <select name="course" id="course" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
+            {% for course in course_list %}
+            <option value="{{course}}">{{course}}</option>
+            {% endfor %}
+          </select>
+          <br><br>
+          <input type="submit" value="Next">
+        </form>
 
-<form action="/rate_ta/{{session_id}}" method="POST">
-  <input type="hidden" name="choice" value="choose_course">
+        <div style="text-align: center; color: red;">{{msg}}</div>
+      </div>
+    </body>
+</html>
 
-  <label for="course">Course:</label>
-  <select name="course" id="course">
-    {% for course in course_list %}
-    <option value="{{course}}">{{course}}</option>
-    {% endfor %}
-  </select>
-  <br><br>
-  <input type="submit" value="Next">
-</form>
-<div style="text-align: center; color: red;">{{msg}}</div>
+
+
+
+
 
