@@ -52,8 +52,15 @@ instructor_name, course_enrollment_num, TA_quota):
         return False
 
 def add_ta_cohort_to_db(term_month_year, TA_name, student_ID, 
-legal_name, email, is_grad, supervisor_name, priority, hours, date_applied, 
+legal_name, email, grad_ugrad, supervisor_name, priority, hours, date_applied, 
 location, phone, degree, courses_applied_for, open_to_other_courses, notes):
-    return 
-
+    # turns yes/no string into bit
+    bool_dict = {'yes': 1, 'no': 0}
+    fname, lname = name_splitter(TA_name)
+    user_id = query_db(f"Select user_id FROM users "
+                        f"WHERE first_name = '{fname}' AND last_name = '{lname}'", one=True)
+    mutate_db("INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user_id, fname, lname, email, None, None, location, legal_name, phone, 1])
+    mutate_db("INSERT INTO students VALUES (?, ?, ?, ?, ?)", [user_id, student_ID, grad_ugrad, supervisor_name, degree])
+    mutate_db("INSERT INTO ta_cohort VALUES (?, ?, ?, ?, ?, ?, ?)", [None, term_month_year, bool_dict[priority], hours, date_applied, bool_dict[open_to_other_courses], notes])
+    # TODO: parse courses_applied_for and insert into ta_applied_courses
 

@@ -26,7 +26,7 @@ CREATE TABLE sys_ops (
 CREATE TABLE students (
     user_id integer,
     student_id integer,
-    grad BIT,
+    grad_ugrad text,
     supervisor_name text,
     degree text,
     PRIMARY KEY (user_id),
