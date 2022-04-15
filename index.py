@@ -129,7 +129,7 @@ def manual_add_prof_course(session_id=None):
 @app.route("/import_prof_course/")
 @app.route("/import_prof_course/<session_id>", methods=['GET', 'POST'])
 def import_prof_course(session_id=None):
-    return page_decorator("import_prof_course", manage_users_post, session_id)
+    return page_decorator("import_prof_course", import_prof_course_post, session_id)
 
 
 if __name__ == "__main__":
