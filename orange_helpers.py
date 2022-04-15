@@ -75,3 +75,12 @@ def remove_ta(fname, lname, student_id, course_num, course_term):
 
     return True
 
+
+    return
+
+def add_course_quota_to_db(filepath):
+    return
+
+def add_ta_cohort_to_db(filepath):
+    return
+
