@@ -1,41 +1,245 @@
-<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
+<!DOCTYPE html>
+<html>
+  <head> </head>
+    <title>Rating in Progress</title>
+    <script>
+      if(device-width <= 428){
+        document.write('<meta name="viewport" content="width=428">');
+      }
+      else if(device-width > 428 && device-width <= 1024){
+        document.write('<meta name="viewport" content="width=1024" >');
+        }
+      else{
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+      }
+    </script>
+    <style>
 
-<h1> Rate a TA </h1>
+      *{
+        background-color: #C7DFFA;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      }
 
-<h2> {{course_num}} {{course_term}}</h2>
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .button {
+        width: 200px;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #C24C7C;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .checked {
+        color: orange;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      /* Star rating from https://codepen.io/hesguru/pen/BaybqXv */
+      .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+      }
+
+      .rate:not(:checked) > input {
+        position:absolute;
+        top:-9999px;
+      }
+
+      .rate:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+      }
+
+      .rate:not(:checked) > label:before {
+        content: '★ ';
+      }
 
 
-<form action="/rate_ta/{{session_id}}/{{course_num}}/{{course_term}}" method="POST">
-  <input type="hidden" name="choice" value="rate_ta">
+      .rate > input:checked ~ label {
+        color: #ffc700;    
+      }
 
-  <label for="ta">TA:</label>
-  <select name="ta" id="ta">
-    {% for name in ta_names %}
-    <option value="{{name}}">{{name}}</option>
-    {% endfor %}
-  </select>
-  <br><br>
+      .rate:not(:checked) > label:hover,
+      .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;  
+      }
+      .rate > input:checked + label:hover,
+      .rate > input:checked + label:hover ~ label,
+      .rate > input:checked ~ label:hover,
+      .rate > input:checked ~ label:hover ~ label,
+      .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+      
 
 
-    Rating<br>
-  <input type="radio" id="0star" name="rating" value="0">
-  <label for="0star">0</label>
-  <input type="radio" id="1star" name="rating" value="1">
-  <label for="1star">1</label>
-  <input type="radio" id="2star" name="rating" value="2">
-  <label for="2star">2</label>
-  <input type="radio" id="3star" name="rating" value="3">
-  <label for="3star">3</label>
-  <input type="radio" id="4star" name="rating" value="4">
-  <label for="4star">4</label>
-  <input type="radio" id="5star" name="rating" value="5">
-  <label for="5star">5</label>
-  <br><br>
+    </style>
+    
+    <body>
+      <div class="desktop">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div style="padding-top: 15px; padding-left: 2%;"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+        <h1 style="padding-left: 2%;">Rating in progress for {{course_num}} {{course_term}} :</h1>
+        <img src="{{url_for('static', filename='Rating.png')}}" style="width: 41%;" class="imgcenter">
 
-  <label for="comment">Comments on TA:</label><br>
-  <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
-  <br><br>
+        <form action="/rate_ta/{{session_id}}/{{course_num}}/{{course_term}}" method="POST">
+          <input type="hidden" name="choice" value="rate_ta">
+          
+        
+          <label for="ta" style="font-size: 25px; padding-left: 2%;">Select the TA you Would like to Rate:</label>
+          <select name="ta" id="ta" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
+            {% for name in ta_names %}
+            <option value="{{name}}">{{name}}</option>
+            {% endfor %}
+          </select>
 
-  <input type="submit" value="Submit">
-</form>
-<div style="text-align: center; color: red;">{{msg}}</div>
+          <br><br>
+          <p style="font-size: 20px; padding-left: 40%; margin: 0;">How Many Stars Would You Give This TA?</p>
+          <div style="padding-left: 45%;" class="rate">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" title="text">1 stars</label>
+            <input type="radio" id="star0" name="rating" value="0">
+            <label for="star0" title="text">0 stars</label>
+          </div>
+          <br><br><br><br><br>
+
+          
+          <label for="comment" style="font-size: 20px; padding-left: 40%;">Comments on TA:</label><br>
+          <div style="padding-left: 40%;">
+            <textarea id="comment" name="comment" rows="4" cols="50" style="background-color: white; height: 110px;"></textarea>
+            <br><br>
+          </div>
+          <div style="text-align: center;">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div>
+      </div>
+
+      <div class="phoneandtablet">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div style="padding-top: 15px; padding-left: 2%;"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+        <p style="text-align: center; font-size: 20px;"><b>Rating in progress for {{course_num}} {{course_term}}</b></p]>
+        <img src="{{url_for('static', filename='Rating.png')}}" style="width: 41%;" class="imgcenter">
+
+        <form action="/rate_ta/{{session_id}}/{{course_num}}/{{course_term}}" method="POST">
+          <input type="hidden" name="choice" value="rate_ta">
+          
+          <div style="text-align: center;">
+            <label for="ta" style="font-size: 15px;">Select the TA you Would like to Rate:</label>
+            <select name="ta" id="ta" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
+              {% for name in ta_names %}
+              <option value="{{name}}">{{name}}</option>
+              {% endfor %}
+            </select>
+          
+
+            <br><br>
+            <p style="font-size: 20px; ; margin: 0;">How Many Stars Would You Give This TA?</p>
+            <div class="rate" style="padding-left: 35%;">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5" title="text">5 stars</label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4" title="text">4 stars</label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3" title="text">3 stars</label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2" title="text">2 stars</label>
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1" title="text">1 stars</label>
+              <input type="radio" id="star0" name="rating" value="0">
+              <label for="star0" title="text">0 stars</label>
+            </div>
+            <br><br><br><br><br>
+            <label for="comment" style="font-size: 20px;">Comments on TA:</label><br>
+            <textarea id="comment" name="comment" rows="4" cols="50" style="background-color: white; height: 110px;"></textarea>
+            <br><br>  
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div>
+      </div>
+    </body>
+</html>
