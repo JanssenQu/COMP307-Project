@@ -1,4 +1,4 @@
-<a href="/ta_management_dashboard/{{session_id}}/{{course_id}}>/{{course_num}}">{{course_num}} TA Management Dashboard</a>
+<a href="/ta_management_dashboard/{{session_id}}/{{course_id}}/{{course_num}}">{{course_num}} TA Management Dashboard</a>
 
 
 
@@ -7,18 +7,24 @@
 
 
 
-<form action="/perf_log/{{session_id}}" method="POST">
-  <label for="course">TA:</label>
-  <select name="course" id="course">
+<form action="/wishlist/{{session_id}}/{{course_id}}/{{course_num}}" method="POST">
+  <label for="term">Term:</label>
+  <select name="term" id="term">
+    {% for term in term_list %}
+    <option value="{{term}}">{{term}}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+  <label for="ta">TA:</label>
+  <select name="ta" id="ta">
     {% for ta in ta_list %}
     <option value="{{ta}}">{{ta}}</option>
     {% endfor %}
   </select>
   <br><br>
-
-
   </textarea>
   <br><br>
   <input type="submit" value="Add TA to Wish List">
 
 </form>
+<div style="text-align: center; color: red;">{{msg}}</div>
