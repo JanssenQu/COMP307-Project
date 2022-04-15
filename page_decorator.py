@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for
 from rate_ta_helper import *
 from session import *
 from user_registration_and_yellow_helpers import *
+from orange_helpers import *
 
 def page_decorator(page, post_func, session_id, *args):
     if session_id is None:
@@ -107,6 +108,47 @@ def ta_admin_post(session_id):
             return render_template('ta_admin.html', session_id=session_id)
 
         return render_template('ta_admin.html', session_id=session_id)
+
+
+
+def add_ta_post(session_id):
+    if has_access_to_orange(session_id):
+        if request.method == 'POST':
+            fname = request.form['fname']
+            lname = request.form['lname']
+            student_id = request.form['sid']
+            course_num = request.form['course_num']
+            course_term = request.form['course_term']
+            hours = request.form['hours']
+            email = request.form['email']
+            group = request.form.get('group')
+            added = add_ta(fname, lname, student_id, course_num, course_term, hours, email, group)
+            if added:
+                return render_template('add_ta.html', session_id=session_id, msg="Added")
+            msg = "Failed to add, make sure data is correct and the course is in the database" \
+                  "add the course with import TA cohort/ course quota."
+            return render_template('add_ta.html', session_id=session_id, msg=msg)
+
+        return render_template('add_ta.html', session_id=session_id)
+
+
+
+def remove_ta_post(session_id):
+    if has_access_to_orange(session_id):
+        if request.method == 'POST':
+            fname = request.form['fname']
+            lname = request.form['lname']
+            student_id = request.form['sid']
+            course_num = request.form['course_num']
+            course_term = request.form['course_term']
+            try:
+                remove_ta(fname, lname, student_id, course_num, course_term)
+                return render_template('remove_ta.html', session_id=session_id,msg="Removed")
+            except:
+                return render_template('remove_ta.html', session_id=session_id,msg="Action not possible check inputs")
+
+        return render_template('remove_ta.html', session_id=session_id)
+
 
 
 def ta_management_dashboard_post(session_id, course_id, course_num):

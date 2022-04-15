@@ -1,0 +1,33 @@
+<a href="/ta_admin/{{session_id}}">Back to TA Admin</a><br><br>
+<h1>Add TA</h1>
+
+<form action="/add_ta/{{session_id}}" method="POST">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="fname" required><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="lname" required><br><br>
+  <label for="sid">Student ID:</label>
+  <input type="number" id="sid" name="sid" required><br><br>
+  <label for="course_num">Course Number:</label>
+  <input type="text" id="course_num" name="course_num" placeholder="E.g. Comp 307" required><br><br>
+  <label for="course_term">Course Term:</label>
+  <input type="text" id="course_term" name="course_term" placeholder="E.g. Fall 2022" required><br><br>
+  <label for="hours">Assigned Hours:</label>
+  <input type="number" id="hours" name="hours" required><br><br>
+
+  <hr>
+  <h3>Required Fields for New Users</h3>
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email"><br><br>
+
+  <label for="group">Student or Instructor:</label>
+  <select name="group" id="group">
+  <option value="student">Student</option>
+  <option value="instructor">Instructor</option>
+
+  </select>
+
+  <hr>
+  <input type="submit" value="Add">
+</form>
+<div>{{msg}}</div>
