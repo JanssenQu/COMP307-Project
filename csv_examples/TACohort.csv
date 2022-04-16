@@ -1,0 +1,4 @@
+term_month_year,TA_name,student_ID,legal_name,email,grad_ugrad,supervisor_name,priority(yes/no),hours(90/180),date_applied,location,phone,degree,courses_applied_for,open_to_other_courses(yes/no),notes
+Fall 2022,TA1 TA1,1001,TA1 TA1,ta1@mail,ugrad,super visor,no,90,2022-05-05,Montreal,514-151-5616,ba science,Comp 307,no,no notes
+Fall 2022,TA2 TA2,1002,TA2 TA2,ta2@mail,grad,super visor,yes,180,2022-05-05,Montreal,514-513-8456,ba science,"Comp 307, Comp 424",no,no notes for TA2
+Fall 2022,TA3 TA3,1003,TA3 TA3,ta3@mail,ugrad,super visor,no,90,2022-05-05,Montreal,514-823-8325,ba arts,Math 240,yes,no notes about TA3

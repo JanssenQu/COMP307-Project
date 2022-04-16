@@ -108,10 +108,10 @@ def ta_admin_post(session_id):
         if request.method == 'POST':
             if request.files:
                 uploaded_file = request.files['file']
-                if str.lower(uploaded_file.filename[-4:]) != ".csv":
+                if len(uploaded_file.filename) < 4 or str.lower(uploaded_file.filename[-4:]) != ".csv":
                     msg = 'Please upload a csv file'
                     return render_template('ta_admin.html', msg=msg, session_id=session_id)
-
+                # set a filepath to save a temp file
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
                 if request.form['file_type'] == 'course_quota':
@@ -120,7 +120,7 @@ def ta_admin_post(session_id):
                     lines_failed_to_add = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
                 if len(lines_failed_to_add) > 0:
-                    msg = f'Failed to add the following rows {lines_failed_to_add}.'
+                    msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor must be registered'
 
                 return render_template('ta_admin.html', msg=msg, session_id=session_id)
 
@@ -337,10 +337,10 @@ def import_prof_course_post(session_id):
         if request.method == 'POST':
             if request.files:
                 uploaded_file = request.files['file']
-                if str.lower(uploaded_file.filename[-4:]) != ".csv":
+                if len(uploaded_file.filename) < 4 or str.lower(uploaded_file.filename[-4:]) != ".csv":
                     msg = 'Please upload a csv file'
                     return render_template('import_prof_course.html', msg=msg, session_id=session_id)
-
+                # set a filepath to save a temp file
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
                 lines_failed_to_add = add_csv_to_db(filepath, add_prof_course_to_db)
