@@ -1,25 +1,256 @@
 <!--- Need to update don't commit --->
 <!DOCTYPE html>
 <html>
+  <title>Manual Import Course</title>
+  <script>
+      document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+  </script>
+  <style>
+
+    *{
+      margin: 0;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+
+    .line{
+      /* Line 1 */
+      position: relative;
+      width: 95%;
+      height: 0px;
+      left: 2%;
+      top: 5px;
+
+      border: 1px solid #3375BF;
+    }
+
+    .containerone{
+      margin: 0%;
+      padding-left: 2%;
+    }
+
+    .button {
+      width: 200px;
+      font-size: 15px;
+      background-color: #F6A72E;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0px 2px;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 15px;
+    }
+
+    .button:hover {
+      background-color: #C24C7C;
+    }
+
+    .imgcenter{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    input[type=submit]{
+      background-color: #C24C7C;
+      border-radius: 50px;
+      border: none;
+      color: white;
+      padding: 5px 15px;
+      text-decoration: none;
+      margin: 4px 2px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    
+    input[type=submit]:hover{
+      background-color: #F6A72E;
+    }
+
+    input[type=text], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=password], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=email], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=number], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=checkbox], select{
+        display: inline-block;
+      }
+
+  /* input[type="file"] {
+      display: none;
+  } */
+
+  .custom-file-upload {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
+  }
+
+    .desktop{
+      width: auto;
+    }
+
+    .phoneandtablet {
+      width: auto;
+    }
+
+    /* DESKTOP SIZE */
+    @media only screen and (min-width: 1065px){
+      .phoneandtablet {display: none;}
+    }
+
+    /* TABLET - PHONE SIZE */
+    @media only screen and (max-width: 1065px){
+      .desktop {display: none;}
+    }
+
+    .alignleft {
+    float: left;
+      width: 50%;
+    }
+
+    .alignright {
+    float: right;
+      width: 40%;
+      padding-right: 10%;
+    }
+
+    .alignrighttwo{
+      float: right;
+    }
+
+    .labelcustom{
+    display: inline-block;
+    /* float: left; */
+    clear: left;
+    width: 250px;
+    text-align: right;
+    }
+    .inputcustom {
+      display: inline-block;
+      /* float: left; */
+    }
+    
+  </style>
 <body>
+  <div class="desktop">
+    <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+    <div class="line"></div>
+    <div id="textbox">
+        <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course Manually</u></p>
+        <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
+    </div>
+    <br><br><br><br><br><br>
 
-<a href="/sysop_tasks/{{session_id}}">Back to Sysop Tasks</a>
 
-<h1>Add an Instructor for a Course</h1>
-<p>The instructor must be registered to be added</p>
+    <div>
+      <div class="alignright">
+        <br><br><br>
+        <p style="font-weight: 700; font-size: 48px; text-align: center;">Import Students and Prof <u>Manually</u></p>
+        <br><br>
+        <p style="font-weight: 400; font-size: 24px; text-align: center;">The instructor must be registered to be added.</p>
+        <br><br>
+        <form action="/manual_add_prof_course/{{session_id}}" method="POST">
+          <label for="term_month_year" class="labelcustom">Term:</label>
+          <input type="text" id="term_month_year" name="term_month_year" required class="inputcustom"><br>
+          <br><br>
+          <label for="course_num" class="labelcustom">Course Number:</label>
+          <input type="text" id="course_num" name="course_num" required class="inputcustom"><br>
+          <br><br>
+          <label for="course_name" class="labelcustom">Course Name:</label>
+          <input type="text" id="course_name" name="course_name" required class="inputcustom"><br>
+          <br><br>
+          <label for="instructor_assigned_name" class="labelcustom">Instructor Name:</label>
+          <input type="text" id="instructor_assigned_name" name="instructor_assigned_name" required class="inputcustom"><br><br>
+          <div style="text-align: center;"><input type="submit" value="Add"></div>
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div>
+      </div>
+      <div class="alignleft">
+        <img src="{{url_for('static', filename='import.png')}}" style="width: 75%; padding-left: 5%;">
+      </div>
+    </div>
+  </div>
 
-<form action="/manual_add_prof_course/{{session_id}}" method="POST">
-  <label for="term_month_year">Term:</label><br>
-  <input type="text" id="term_month_year" name="term_month_year" required><br>
-  <label for="course_num">Course Number:</label><br>
-  <input type="text" id="course_num" name="course_num" required><br>
-  <label for="course_name">Course Name:</label><br>
-  <input type="text" id="course_name" name="course_name" required><br>
-  <label for="instructor_assigned_name">Instructor Name:</label><br>
-  <input type="text" id="instructor_assigned_name" name="instructor_assigned_name" required><br><br>
-  <input type="submit" value="Add">
-</form>
-<div style="text-align: center; color: red;">{{msg}}</div>
+  <div class="phoneandtablet">
+    <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+    <div class="line"></div>
+    <div id="textbox">
+        <!-- <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course Manually</u></p> -->
+        <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
+    </div>
+    <br><br><br>
+    <img src="{{url_for('static', filename='import.png')}}" style="width: 65%;" class="imgcenter">
+    <div style="text-align: center;">
+      <p style="font-weight: 700; font-size: 38px; text-align: center;">Import Students and Prof <u>Manually</u></p>
+      <br><br>
+        <p style="font-weight: 400; font-size: 20px; text-align: center;">The instructor must be registered to be added.</p>
+        <br><br>
+        <form action="/manual_add_prof_course/{{session_id}}" method="POST">
+          <label for="term_month_year">Term:</label><br>
+          <input type="text" id="term_month_year" name="term_month_year" required><br>
+          <br><br>
+          <label for="course_num">Course Number:</label><br>
+          <input type="text" id="course_num" name="course_num" required><br>
+          <br><br>
+          <label for="course_name">Course Name:</label><br>
+          <input type="text" id="course_name" name="course_name" required><br>
+          <br><br>
+          <label for="instructor_assigned_name">Instructor Name:</label><br>
+          <input type="text" id="instructor_assigned_name" name="instructor_assigned_name" required><br><br>
+          <div style="text-align: center;"><input type="submit" value="Add"></div>
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div>
+        <br><br>
+    </div>
+
+  </div>
+
+
 
 </body>
 </html>
