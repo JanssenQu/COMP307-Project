@@ -176,7 +176,16 @@
       }
 
       .desktop{
-        width: auto;
+        display: block;
+      }
+
+      .phoneandtablet {
+        display: block;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
       }
 
       /* TABLET - PHONE SIZE */
@@ -200,7 +209,8 @@
       <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="dashbutton" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
     </div>
     <br><br><br><br>
-    <div><img src="{{url_for('static', filename='find.png')}}" style="width: 30%; padding-left: 2%;" class="imgcenter"></div>
+    <div><img src="{{url_for('static', filename='find.png')}}" style="width: 30%; padding-left: 2%;" class="imgcenter desktop"></div>
+    <div><img src="{{url_for('static', filename='find.png')}}" style="width: 60%; padding-left: 2%;" class="imgcenter phoneandtablet"></div>
 
     <div id="textbox" style="margin: 0%;">
       <div style="text-align: center;">
