@@ -1,19 +1,193 @@
-<a href="/ta_management_dashboard/{{session_id}}/{{course_id}}/{{course_num}}">{{course_num}} TA Management Dashboard</a>
+<!DOCTYPE html>
+<html>
+  <title>TA Wishlist</title>
+  <head>
+    <script>
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    </script>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
 
 
+      .alignleft {
+	      float: left;
+        width: 40%;
+      }
 
-<h1>{{course_num}} TA Wish List For {{course_term}}</h1>
+      .alignright {
+	      float: right;
+        width: 40%;
+        padding-right: 10%;
+      }
 
+      .alignrighttwo{
+        float: right;
+      }
 
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
 
+      .button:hover {
+        background-color: #C24C7C;
+      }
 
-<form action="/wishlist/{{session_id}}/{{course_id}}/{{course_num}}" method="POST">
-  <label for="fname">First Name:</label>
-  <input type="text" id="fname" name="fname" required><br><br>
-  <label for="lname">Last Name:</label>
-  <input type="text" id="lname" name="lname" required><br><br>
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
 
-  <input type="submit" value="Add TA to Wish List">
+        border: 1px solid #3375BF;
+      }
 
-</form>
-<div style="text-align: center; color: red;">{{msg}}</div>
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+      <div style="position: relative;">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div id="textbox">
+          <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > {{course_num}} > <u>Wishlist</u> </p>
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/ta_management_dashboard/{{session_id}}/{{course_id}}/{{course_num}}';">{{course_num}} TA Management Dashboard</button></div>
+        </div>
+        <br><br><br><br>
+        <div id="textbox" style="margin: 0%;">
+          <div class="alignleft">
+            <br><br>
+            <p style="padding-left: 5%; font-size: 48px; font-weight: 700;">{{course_num}} TA Wish List For {{course_term}}</h1>
+              <br><br>
+            <p style="padding-left: 5%; font-size: 36px; font-weight: 700;">The Wish List Allows You to Keep Track of TAs That You Want to Keep in Contact With for Future Semesters</p>
+            <br><br>
+            <p style="padding-left: 5%; font-size: 24px; font-weight: 400;">Only you can add to the wishlist <br>This Wishlist can be viewed by you and your designed TA administrator.</p>
+          </div>
+          <div class="alignright" ><img src="{{url_for('static', filename='wishlist.png')}}" style="width: 100%;"></div>
+        </div>
+      </div>
+      
+      <div class="ellipse" style="color: black; margin: 0%; position: relative;">
+        <br>
+        <p style="text-align: center; font-size: 48px; font-weight: 400;">Add a TA to the Wish List: </p>
+        <br><br><br><br>
+        <form action="/wishlist/{{session_id}}/{{course_id}}/{{course_num}}" method="POST" style="text-align: center;">
+          <label for="fname" style="font-size: 24px; font-weight: 400;">First Name of the TA: </label>
+          <input type="text" id="fname" name="fname" required style="background-color: white; width: 155px; height: 30px; border-radius: 20px; border: none;"><br><br>
+          <label for="lname" style="font-size: 24px; font-weight: 400;">Last Name of the TA: </label>
+          <input type="text" id="lname" name="lname" required style="background-color: white; width: 155px; height: 30px; border-radius: 20px; border: none;"><br><br>
+          <br><br>
+          <input type="submit" value="Add TA to Wish List">
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div> 
+      </div>
+    </div>
+    <div class="phoneandtablet">
+      <div style="position: relative;">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div id="textbox">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/ta_management_dashboard/{{session_id}}/{{course_id}}/{{course_num}}';">{{course_num}} TA Management Dashboard</button></div>
+        </div>
+        <br><br><br><br>
+        <img src="{{url_for('static', filename='wishlist.png')}}" style="width: 50%;" class="imgcenter">
+        <br><br>
+        <p style="padding-left: 5%; font-size: 40px; font-weight: 600; width: 90%;">{{course_num}} TA Wish List For {{course_term}}</h1>
+        <br><br>
+        <p style="padding-left: 5%; font-size: 25px; font-weight: 600; width: 90%;">The Wish List Allows You to Keep Track of TAs That You Want to Keep in Contact With for Future Semesters</p>
+        <br><br>
+        <p style="padding-left: 5%; font-size: 20px; font-weight: 400; width: 90%;">Only you can add to the wishlist <br>This Wishlist can be viewed by you and your designed TA administrator.</p>
+      </div>
+      <div class="ellipsephone" style="position: relative;">
+        <br>
+        <p style="text-align: center; font-size: 48px; font-weight: 400;">Add a TA to the Wish List: </p>
+        <br><br><br><br>
+        <form action="/wishlist/{{session_id}}/{{course_id}}/{{course_num}}" method="POST" style="text-align: center;">
+          <label for="fname" style="font-size: 24px; font-weight: 400;">First Name of the TA: </label>
+          <input type="text" id="fname" name="fname" required style="background-color: white; width: 155px; height: 30px; border-radius: 20px; border: none;"><br><br>
+          <label for="lname" style="font-size: 24px; font-weight: 400;">Last Name of the TA: </label>
+          <input type="text" id="lname" name="lname" required style="background-color: white; width: 155px; height: 30px; border-radius: 20px; border: none;"><br><br>
+          <br><br>
+          <input type="submit" value="Add TA to Wish List">
+        </form>
+        <div style="text-align: center; color: red;">{{msg}}</div> 
+      </div>
+    </div>
+  </body>
+
+</html>
