@@ -78,6 +78,19 @@ def rate_ta(session_id=None, course_num=None, course_term=None):
 def ta_admin(session_id=None):
     return page_decorator("ta_admin", ta_admin_post, session_id)
 
+
+@app.route("/add_ta/")
+@app.route("/add_ta/<session_id>", methods=['GET', 'POST'])
+def add_ta(session_id=None):
+    return page_decorator("add_ta", add_ta_post, session_id)
+
+
+@app.route("/remove_ta/")
+@app.route("/remove_ta/<session_id>", methods=['GET', 'POST'])
+def remove_ta(session_id=None):
+    return page_decorator("remove_ta", remove_ta_post, session_id)
+
+
 # BLUE
 @app.route("/ta_management/")
 @app.route("/ta_management/<session_id>", methods=['GET', 'POST'])

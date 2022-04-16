@@ -26,6 +26,22 @@ def mutate_db(mutation, args=()):
     db.commit()
     cur.close()
 
+
+def list_query_items(query_return, column):
+    '''
+    Used after doing a query_db(query, args, one)
+    pass in the return value and the name of one of the columns that was in the select statement
+
+    :param query_return: the return value of query_db(query, args, one)
+    :param column: str name of column in the select statement of the query done
+    :return: list of values of the query
+    '''
+    list = []
+    for value in query_return:
+        list.append(dict(value).get(column))
+    return list
+
+
 def main():
     # example on how to use the database functions
     #init_db()

@@ -59,6 +59,7 @@ def get_tas(course_num,course_term):
     return ta_name_list
 
 
+# submit the form to the db
 def insert_ta_rating(ta_name,course_num,term,stars,comment):
     course_id = get_course_id(course_num)
     ta_id = find_ta_id(ta_name, course_id, term)

@@ -75,14 +75,14 @@
             <img src="{{url_for('static', filename='logoutcheck.png')}}" style="width: 30%; padding-top: 5%;" class="imgcenter">
             <p style="text-align: center; color: white; font-size: 50px; margin-top: 10px;"><b>Logged out successfully.</b></p>
             <p style="text-align: center; color: #3375BF; font-size: 30px; margin-top: 10px;"><b>Thank You For Using A-TA!</b></p>
-            <p style="color: 0F2233; text-align: center; margin-top: 10px;font-size: 20px;"><b>A bit more to do? </b><button class="button" onclick="window.location.href='{{ url_for(login)}}';">Log In</button></p>
+            <p style="color: 0F2233; text-align: center; margin-top: 10px;font-size: 20px;"><b>A bit more to do? </b><button class="button" onclick="window.location.href='{{ url_for('login')}}';">Log In</button></p>
         </div>
         <div class="phone">
             <img src="{{url_for('static', filename='logoutcheck.png')}}" style="width: 35%; padding-top: 20%;" class="imgcenter">
             <p style="text-align: center; color: white; font-size: 30px; margin-top: 10px;"><b>Logged out successfully.</b></p>
             <p style="text-align: center; color: #3375BF; font-size: 20px; margin-top: 10px;"><b>Thank You For Using A-TA!</b></p>
             <p style="color: 0F2233; text-align: center; margin-top: 10px;font-size: 20px;"><b>A bit more to do? </b></p>
-            <div style="text-align: center; padding-top: 2%;"><button style="text-align: center;" class="button" onclick="window.location.href='{{ url_for(login)}}';">Log In</button></div>
+            <div style="text-align: center; padding-top: 2%;"><button style="text-align: center;" class="button" onclick="window.location.href='{{ url_for('login')}}';">Log In</button></div>
         </div>
     </body>
 </html>
