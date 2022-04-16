@@ -3,16 +3,9 @@ from session import *
 from datetime import date
 
 
-def list_query_items(query_return, column):
-    list = []
-    for value in query_return:
-        list.append(dict(value).get(column))
-    return list
-
-
 # returns the course id of the selected course in the dropdown in select course to be passed in the url
 def get_course_id(course_num):
-    query = query_db(f"Select course_id FROM courses WHERE course_num = '{course_num}'")
+    query = query_db(f"Select course_id FROM courses WHERE course_num LIKE '{course_num}'")
     course_id = None
     for value in query:
         course_id = dict(value).get("course_id")
@@ -29,31 +22,7 @@ def get_all_courses():
     return sorted(course_num_list)
 
 
-# work on it later if needed
-# not tested might replace get_all_courses() might want to change return type to tuples or dict
-'''
-def get_courses(session_id):
-    user_id = get_user_id(session_id)
-
-
-    query_teaching_courses = query_db(f"Select DISTINCT course_id FROM teaching_courses WHERE user_id = '{user_id}'")
-    course_id_list = []
-    for value in query_teaching_courses:
-        course_id = dict(value).get("course_id")
-        course_id_list.append(course_id)
-
-    query_ta_courses = query_db(f"Select DISTINCT course_id FROM ta_courses WHERE user_id = '{user_id}'")
-    for value in query_ta_courses:
-        course_id = dict(value).get("course_id")
-        course_id_list.append(course_id)
-
-    course_num_list = []
-    for course_id in course_id_list: # append the course_num
-        return
-
-    return course_id_list, course_num_list
-'''
-
+# loads the term and TA dropdowns in performance log
 def perf_log_dropdown_data(course_id):
     try:
         course_term_list = []
@@ -80,6 +49,8 @@ def perf_log_dropdown_data(course_id):
     except sqlite3.OperationalError:
         return [],[]
 
+
+# for submitting the ta perfomance log form
 def add_performance_log(prof_id, ta_id, course_id, course_term, comment):
     mutate_db('INSERT INTO ta_performance_log VALUES (?,?,?,?,?,?)', [None, prof_id, ta_id, course_id, course_term, comment])
     return True
@@ -104,19 +75,7 @@ def find_ta_id(name, course_id, course_term):
         return None
 
 
-
-# TODO return a list of ta for the course
-def get_ta_applications(course_id):
-    ta_name_list = []
-
-    # find id from some table
-
-
-    # find the names from the users table
-
-    return ta_name_list
-
-
+# for the wishlist
 def next_semester():
     currentMonth = datetime.now().month
     currentYear = datetime.now().year
@@ -130,6 +89,7 @@ def next_semester():
     return next_semester
 
 
+# for the wishlist
 def find_user_id_by_name(fname,lname):
     try:
         query_user_id = query_db(f"Select user_id FROM users WHERE first_name LIKE '{fname}%' AND last_name LIKE '%{lname}'")
@@ -140,6 +100,7 @@ def find_user_id_by_name(fname,lname):
         return None
 
 
+# for submitting the wishlist form
 def add_to_wishlist(course_id, term, prof_id, ta_id):
     if ta_id is None:
         return False

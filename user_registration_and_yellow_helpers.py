@@ -66,6 +66,7 @@ def find_users(name):
     return tuple(user_list)
 
 
+# add a new user
 def add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, prof, admin, sysop):
     has_email = query_db(f"SELECT email FROM users WHERE email='{email}'")
     has_user = query_db(f"SELECT username FROM users WHERE username='{usrname}'")
@@ -101,6 +102,7 @@ def add_user(studentprof_id, fname, lname, email, usrname, pwd, student, ta, pro
     return False
 
 
+# modify an existing user
 def update_user(user_id, studentprof_id, fname, lname, email, usrname, pwd, student, ta, prof, admin, sysop):
     if user_id == '':
         return False
@@ -167,6 +169,7 @@ def delete_user(user_id):
         return False
 
 
+# disallow login to user
 def deactivate_user(user_id):
     try:
         mutate_db(f"UPDATE users SET active = 0 WHERE user_id = {int(user_id)};")
