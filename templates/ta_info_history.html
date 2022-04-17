@@ -1,0 +1,181 @@
+<!---
+    Page description below
+
+    Search form
+
+    Section 1 TA personal info
+    -TA_name as title
+    legal_name, Student_ID, email, phone, location, degree, grad_ugrad, supervisor_name
+
+
+    Section 2 TA cohort
+    term_month_year, priority(yes/no), hours(90/180), date_applied, courses_applied_for, open_to_other_courses(yes/no), notes
+
+    Section 3 Reviews
+    -Average rating
+    -student rating comments
+
+    Section 4
+    -professor performance log
+
+    Section 5
+    -prof wish list membership
+
+    Section 6
+    -the courses that are currently assigned to the TA this term
+
+--->
+
+
+
+<a href="{{ url_for('ta_admin', session_id=session_id) }}">Back to TA Admin</a>
+
+
+<h1>TA Info History</h1>
+
+
+
+<form action="{{ url_for('ta_info_history', session_id=session_id) }}" method="POST">
+  <input type="text" placeholder="First Name" id="fname" name="fname" required>
+  <input type="text" placeholder="Last Name" id="lname" name="lname" required>
+  <input type="submit" name="option" value="Find"><br><br>
+</form>
+
+<div>{{msg}}</div>
+
+<!--- Display name of chosen ta and personal info--->
+<h2>{{fname}} {{lname}} Personal info</h2>
+<div>
+    <table>
+    <tr>
+        <th>Legal Name</th>
+        <th>Student ID</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Location</th>
+        <th>Degree</th>
+        <th>Grad Undergrad</th>
+        <th>Supervisor</th>
+    </tr>
+    {% for row in personal_info %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
+
+
+<!--- Display name of chosen ta and personal info--->
+<h2>{{fname}} {{lname}} Application info</h2>
+<div>
+    <table>
+    <tr>
+        <th>Term</th>
+        <th>Courses Applied</th>
+        <th>Priority</th>
+        <th>Hours</th>
+        <th>Date Applied</th>
+        <th>Open to Other Courses</th>
+        <th>Notes</th>
+    </tr>
+    {% for row in ta_application %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
+
+
+
+<!--- display rating and comments--->
+<h2>Rating</h2>
+<div> TA Average Rating: {{avg_rating}} </div>
+<br>
+<div>
+    <table>
+    <tr>
+        <th>Rating</th>
+        <th>Course</th>
+        <th>Term</th>
+        <th>Comments</th>
+    </tr>
+    {% for row in reviews %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
+
+<!--- display perf log --->
+<h2>Performance</h2>
+<div>
+    <table>
+    <tr>
+        <th>Professor</th>
+        <th>Course</th>
+        <th>Term</th>
+        <th>Comment</th>
+    </tr>
+    {% for row in performance %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
+
+<!--- display wishlist--->
+<h2>Wishlist</h2>
+<div>
+    <table>
+    <tr>
+        <th>Professor</th>
+        <th>Course</th>
+        <th>Term</th>
+    </tr>
+    {% for row in wishlist %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
+
+
+<!--- display courses assigned to--->
+<h2>Assigned to</h2>
+<div>
+    <table>
+    <tr>
+        <th>Course</th>
+        <th>Term</th>
+        <th>hours</th>
+    </tr>
+    {% for row in ta_courses %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+<br>
