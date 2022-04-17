@@ -1,166 +1,378 @@
 <!DOCTYPE html>
 <html>
-<style>
-/* For selecting which tab to show ie add or delete */
-.tabcontent {
-  display: none;
-}
-</style>
+  <title>Sysop Menu</title>
+  <head>
+    <script>
+      document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    </script>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
+
+      input[type=text], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=password], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=email], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=number], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      form{
+        text-align: center;
+      }
+
+
+      .alignleft {
+	      float: left;
+        width: 40%;
+      }
+
+      .alignright {
+	      float: right;
+        width: 50%;
+        padding-right: 10%;
+      }
+
+      .alignrighttwo{
+        float: right;
+      }
+
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #C24C7C;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #F6A72E;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        position: absolute;
+        top: 80%;
+        width: 100%;
+        height: 40%;
+        flex-grow: 1;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        position: absolute;
+        top: 95%;
+        width: 100%;
+        height: 40%;
+        flex-grow: 1;
+        background: #CFE2F3;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .dashbutton{
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .dashbutton:hover{
+        background-color: #C24C7C;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .tablecenter {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .next{
+        display: inline;
+      }
+
+      .desktop{
+        display: block;
+      }
+
+      .phoneandtablet {
+        display: block;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      } *
+
+      /* For selecting which tab to show ie add or delete */
+      .tabcontent {
+        display: none;
+      }
+
+    </style>
+  </head>
 <body>
-<a href="{{ url_for('sysop_tasks', session_id=session_id) }}">Back to Sysop Tasks</a>
+  <div>
+    <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+    <div class="line"></div>
+    <div id="textbox">
+      <p class="alignleft desktop" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Manage Users</u></p>
+      <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="dashbutton" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+    </div>
+    <br><br><br><br>
+    <div><img src="{{url_for('static', filename='find.png')}}" style="width: 30%; padding-left: 2%;" class="imgcenter desktop"></div>
+    <div><img src="{{url_for('static', filename='find.png')}}" style="width: 60%; padding-left: 2%;" class="imgcenter phoneandtablet"></div>
 
-<h1>Edit, Delete, Add User Accounts</h1>
-
-
-
-<!--- Section for finding and showing users--->
-<br><hr>
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST">
-    <input type="hidden" name="choice" value="find">
-  <label for="search">Find a User:</label><br>
-  <input type="text" placeholder="Enter Name" id="search" name="search">
-  <input type="submit" name="option" value="Find"><br><br>
-</form>
-<table>
-    <tr>
-        {% for header in headings %}
-        <th>{{ header }}</th>
-        {% endfor %}
-    </tr>
-    {% for row in data %}
-    <tr>
-        {% for cell in row %}
-        <td>{{ cell }}</td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
-<hr>
-
-<!--- Section for add, delete, edit --->
-<div class="tab">
-  <button class="tablinks" onclick="show(event, 'add')">Add User</button>
-    <button class="tablinks" onclick="show(event, 'update')">Update User</button>
-  <button class="tablinks" onclick="show(event, 'delete')">Delete User</button>
-      <button class="tablinks" onclick="show(event, 'deactivate')">Deactivate User</button>
-      <button class="tablinks" onclick="show(event, 'reactivate')">Reactivate User</button>
-</div>
-
-
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="add" class="tabcontent">
-    <input type="hidden" name="choice" value="add">
-
-    <br>
-    <label for="email">Email</label><br>
-    <input type="email" placeholder="Enter email" name="email" id="email" required>
-    <br><br>
-
-    <label for="uid">Student ID</label><br>
-    <input type="number" placeholder="Enter User ID" name="uid" id="uid" required>
-    <br><br>
-
-    <label for="fname">First Name</label><br>
-    <input type="text" placeholder="Enter First Name" name="fname" id="fname" required>
-    <br><br>
-
-    <label for="lname">Last Name</label><br>
-    <input type="text" placeholder="Enter Last Name" name="lname" id="lname" required>
-    <br><br>
-
-    User Group: <br>
-    <input type="checkbox" id="student" name="student" value="Student">
-    <label for="student"> Student &nbsp </label>
-
-    <input type="checkbox" id="ta" name="ta" value="TA">
-    <label for="ta"> TA &nbsp </label>
-
-    <input type="checkbox" id="prof" name="prof" value="Prof">
-    <label for="prof"> Prof &nbsp </label>
-
-    <input type="checkbox" id="admin" name="admin" value="Admin">
-    <label for="admin"> Admin &nbsp</label>
-
-    <input type="checkbox" id="sysop" name="sysop" value="Sysop">
-    <label for="sysop"> Sysop</label><br><br>
-
-    <button type="submit" name="option" value="Add" class="button">Add</button>
-</form>
-
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="update" class="tabcontent">
-    <input type="hidden" name="choice" value="edit">
-
-    <br><label for="system_uid">System User ID:</label><br>
-    <input type="text" placeholder="Enter System User ID" id="system_uid" name="system_uid"><br>
-
-    <br>
-    <label for="usrname_update">Username</label><br>
-    <input type="text" placeholder="Enter Username" name="usrname_update" id="usrname_update">
-    <br><br>
-
-    <label for="psw_update">Password</label><br>
-    <input type="password" placeholder="Enter Password" name="psw_update" id="psw_update">
-    <br><br>
-
-    <label for="email_update">Email</label><br>
-    <input type="email_update" placeholder="Enter email" name="email_update" id="email_update">
-    <br><br>
-
-    <label for="uid_update">Student ID</label><br>
-    <input type="text" placeholder="Enter User ID" name="uid_update" id="uid_update">
-    <br><br>
-
-    <label for="fname_update">First Name</label><br>
-    <input type="text" placeholder="Enter First Name" name="fname_update" id="fname_update">
-    <br><br>
-
-    <label for="lname_update">Last Name</label><br>
-    <input type="text" placeholder="Enter Last Name" name="lname_update" id="lname_update">
-    <br><br>
-
-    User Group: <br>
-    <input type="checkbox" id="student_update" name="student_update" value="Student">
-    <label for="student_update"> Student &nbsp </label>
-
-    <input type="checkbox" id="ta_update" name="ta_update" value="TA">
-    <label for="ta_update"> TA &nbsp </label>
-
-    <input type="checkbox" id="prof_update" name="prof_update" value="Prof">
-    <label for="prof_update"> Prof &nbsp </label>
-
-    <input type="checkbox" id="admin_update" name="admin_update" value="Admin">
-    <label for="admin_update"> Admin &nbsp</label>
-
-    <input type="checkbox" id="sysop_update" name="sysop_update" value="Sysop">
-    <label for="sysop_update"> Sysop</label><br><br>
-
-    <input type="submit" name="option" value="Edit"><br><br>
-
-
-</form>
-
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="delete" class="tabcontent">
-    <p>Warning this will delete the user from the database. Consider deactivating the user.</p>
-    <input type="hidden" name="choice" value="delete">
-    <br><label for="usrdelete">Delete a User Enter System User ID:</label><br>
-    <input type="number" id="usrdelete" name="usrdelete">
-    <input type="submit" name="option" value="Delete"><br><br>
-</form>
-
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="deactivate" class="tabcontent">
-    <input type="hidden" name="choice" value="deactivate">
-    <br><label for="usrdeactivate">Deactivate a User Enter System User ID:</label><br>
-    <input type="number" id="usrdeactivate" name="usrdeactivate">
-    <input type="submit" name="option" value="Deactivate"><br><br>
-</form>
-
-<form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="reactivate" class="tabcontent">
-    <input type="hidden" name="choice" value="reactivate">
-    <br><label for="usrreactivate">Reactivate a User Enter System User ID:</label><br>
-    <input type="number" id="usrreactivate" name="usrreactivate">
-    <input type="submit" name="option" value="Reactivate"><br><br>
-</form>
-    <div style="text-align: center; color: red;">{{msg}}</div>
-
+    <div id="textbox" style="margin: 0%;">
+      <div style="text-align: center;">
+        <br><br>
+        <p style="padding-left: 5%; font-size: 48px; font-weight: 700;">Edit, Delete, Add User Accounts</p>
+          <br><br>
+        <p style="padding-left: 5%; font-size: 36px; font-weight: 700;">This Page Allows to Select and Modify a User Status</p>
+        <br><br>
+        <p style="padding-left: 5%; font-size: 24px; font-weight: 400;">This Feature is Only Available to Sysops</p>
+        <br><br>
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" style="text-align: center;">
+          <input type="hidden" name="choice" value="find">
+          <label for="search" style="font-weight: 400; font-size: 40px;">Find a User</label><br>
+          <br>
+          <input type="text" placeholder="Enter Name" id="search" name="search" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
+          <input type="submit" name="option" value="Find"><br><br>
+        </form>
+        <div style="text-align: center; overflow-x:auto;">
+          <table class="tablecenter" style="border-radius: 10px;">
+            <tr>
+                {% for header in headings %}
+                <th style="margin-left: 2px; margin-right: 2px; background-color: #CFE2F3;">{{ header }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="background-color: beige;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <br><br>
+        <div class="tab" style="text-align: center;">
+          <button class="tablinks button" onclick="show(event, 'add')">Add User</button>
+          <button class="tablinks button" onclick="show(event, 'update')">Update User</button>
+          <button class="tablinks button" onclick="show(event, 'delete')">Delete User</button>
+          <button class="tablinks button" onclick="show(event, 'deactivate')">Deactivate User</button>
+          <button class="tablinks button" onclick="show(event, 'reactivate')">Reactivate User</button>
+        </div>
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="add" class="tabcontent" style="text-align: center;">
+          <input type="hidden" name="choice" value="add">
+      
+          <br>
+          <label for="email">Email</label><br>
+          <input type="email" placeholder="Enter email" name="email" id="email" required>
+          <br><br>
+      
+          <label for="uid">Student ID</label><br>
+          <input type="number" placeholder="Enter User ID" name="uid" id="uid" required>
+          <br><br>
+      
+          <label for="fname">First Name</label><br>
+          <input type="text" placeholder="Enter First Name" name="fname" id="fname" required>
+          <br><br>
+      
+          <label for="lname">Last Name</label><br>
+          <input type="text" placeholder="Enter Last Name" name="lname" id="lname" required>
+          <br><br>
+      
+          User Group: <br>
+          <input type="checkbox" id="student" name="student" value="Student">
+          <label for="student"> Student &nbsp </label>
+      
+          <input type="checkbox" id="ta" name="ta" value="TA">
+          <label for="ta"> TA &nbsp </label>
+      
+          <input type="checkbox" id="prof" name="prof" value="Prof">
+          <label for="prof"> Prof &nbsp </label>
+      
+          <input type="checkbox" id="admin" name="admin" value="Admin">
+          <label for="admin"> Admin &nbsp</label>
+      
+          <input type="checkbox" id="sysop" name="sysop" value="Sysop">
+          <label for="sysop"> Sysop</label><br><br>
+      
+          <button type="submit" name="option" value="Add" class="button">Add</button>
+        </form>
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="update" class="tabcontent">
+          <input type="hidden" name="choice" value="edit">
+      
+          <br><label for="system_uid">System User ID:</label><br>
+          <input type="text" placeholder="Enter System User ID" id="system_uid" name="system_uid"><br>
+      
+          <br>
+          <label for="usrname_update">Username</label><br>
+          <input type="text" placeholder="Enter Username" name="usrname_update" id="usrname_update">
+          <br><br>
+      
+          <label for="psw_update">Password</label><br>
+          <input type="password" placeholder="Enter Password" name="psw_update" id="psw_update">
+          <br><br>
+      
+          <label for="email_update">Email</label><br>
+          <input type="email" placeholder="Enter email" name="email_update" id="email_update">
+          <br><br>
+      
+          <label for="uid_update">Student ID</label><br>
+          <input type="text" placeholder="Enter User ID" name="uid_update" id="uid_update">
+          <br><br>
+      
+          <label for="fname_update">First Name</label><br>
+          <input type="text" placeholder="Enter First Name" name="fname_update" id="fname_update">
+          <br><br>
+      
+          <label for="lname_update">Last Name</label><br>
+          <input type="text" placeholder="Enter Last Name" name="lname_update" id="lname_update">
+          <br><br>
+      
+          User Group: <br>
+          <input type="checkbox" id="student_update" name="student_update" value="Student">
+          <label for="student_update"> Student &nbsp </label>
+      
+          <input type="checkbox" id="ta_update" name="ta_update" value="TA">
+          <label for="ta_update"> TA &nbsp </label>
+      
+          <input type="checkbox" id="prof_update" name="prof_update" value="Prof">
+          <label for="prof_update"> Prof &nbsp </label>
+      
+          <input type="checkbox" id="admin_update" name="admin_update" value="Admin">
+          <label for="admin_update"> Admin &nbsp</label>
+      
+          <input type="checkbox" id="sysop_update" name="sysop_update" value="Sysop">
+          <label for="sysop_update"> Sysop</label><br><br>
+      
+          <input type="submit" name="option" value="Edit"><br><br>
+      
+      
+        </form>
+        
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="delete" class="tabcontent">
+            <p>Warning this will delete the user from the database. Consider deactivating the user.</p>
+            <input type="hidden" name="choice" value="delete">
+            <br><label for="usrdelete">Delete a User Enter System User ID:</label><br>
+            <input type="number" id="usrdelete" name="usrdelete">
+            <input type="submit" name="option" value="Delete"><br><br>
+        </form>
+        
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="deactivate" class="tabcontent">
+            <input type="hidden" name="choice" value="deactivate">
+            <br><label for="usrdeactivate">Deactivate a User Enter System User ID:</label><br>
+            <input type="number" id="usrdeactivate" name="usrdeactivate">
+            <input type="submit" name="option" value="Deactivate"><br><br>
+        </form>
+        
+        <form action="{{ url_for('manage_users', session_id=session_id) }}" method="POST" id="reactivate" class="tabcontent">
+            <input type="hidden" name="choice" value="reactivate">
+            <br><label for="usrreactivate">Reactivate a User Enter System User ID:</label><br>
+            <input type="number" id="usrreactivate" name="usrreactivate">
+            <input type="submit" name="option" value="Reactivate"><br><br>
+        </form>
+            <div style="text-align: center; color: red;">{{msg}}</div>
+            <br><br>
+      </div>
+    </div>
+  </div>
 <script>
 function show(evt, tab_name) {
   var i, tabcontent, tablinks;
