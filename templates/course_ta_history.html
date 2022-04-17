@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <title>Add TA</title>
+  <title>Course TA History</title>
   <head>
     <script>
         document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
@@ -151,6 +151,11 @@
         margin-right: auto;
       }
 
+      .tablecenter {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .desktop{
         width: auto;
       }
@@ -199,82 +204,57 @@
     <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
     <div class="line"></div>
     <div id="textbox">
-      <p class="alignleft desktop" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > TA Admin > <u>Add TA</u> </p>
+      <p class="alignleft desktop" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > TA Admin > <u>TA Course History</u> </p>
       <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">Back to TA Admin</button></div>
     </div>
     <br><br><br><br>
-    <img src="{{url_for('static', filename='addta.png')}}" style="width: 15%;" class="imgcenter desktop">
-    <img src="{{url_for('static', filename='addta.png')}}" style="width: 25%;" class="imgcenter phoneandtablet">
-    <br><br><br>
-    <p style="text-align: center; font-size: 48px; font-weight: 700;" class="desktop">Add TA to Course</p>
-    <p style="text-align: center; font-size: 38px; font-weight: 600;" class="phoneandtablet">Add TA to Course</p>
+    <img src="{{url_for('static', filename='history.png')}}" style="width: 15%;" class="imgcenter desktop">
+    <img src="{{url_for('static', filename='history.png')}}" style="width: 25%;" class="imgcenter phoneandtablet">
+    <p style="text-align: center; font-size: 48px; font-weight: 700;" class="desktop">Course TA History</p>
+    <p style="text-align: center; font-size: 38px; font-weight: 600;" class="phoneandtablet">Course TA History</p>
     <br>
-    <p style="text-align: center; font-weight: 400; font-size: 24px;" class="blocktext desktop">By using this you will add a TA for a specific course, to revert this action you will have to remove the TA again through the Remove TA feature.</p>
-    <p style="text-align: center; font-weight: 400; font-size: 18px; margin-left: 5px; margin-right: 5px;" class="blocktextdevice phoneandtablet">By using this you will add a TA for a specific course, to revert this action you will have to remove the TA again through the Remove TA feature.</p>
-    <br><br>
-    <form action="/add_ta/{{session_id}}" method="POST" style="text-align: center;" class="desktop">
-      <label for="fname">First name:</label><br>
-      <input type="text" id="fname" name="fname" required><br>
-      <label for="lname">Last name:</label><br>
-      <input type="text" id="lname" name="lname" required><br><br>
-      <label for="sid">Student ID:</label><br>
-      <input type="number" id="sid" name="sid" required><br><br>
-      <label for="course_num">Course Number:</label><br>
-      <input type="text" id="course_num" name="course_num" placeholder="E.g. Comp 307" required><br><br>
-      <label for="course_term">Course Term:</label><br>
-      <input type="text" id="course_term" name="course_term" placeholder="E.g. Fall 2022" required><br><br>
-      <label for="hours">Assigned Hours:</label><br>
-      <input type="number" id="hours" name="hours" required><br><br>
-    
-      <hr>
-      <br>
-      <h3>Required Fields for New Users</h3>
-      <label for="email">Email:</label><br>
-      <input type="email" id="email" name="email"><br><br>
-    
-      <label for="group">Student or Instructor:</label><br>
-      <select name="group" id="group">
-      <option value="student">Student</option>
-      <option value="instructor">Instructor</option>
-        
-      </select>
-      <br><br>
-    
-      <hr>
-      <input type="submit" value="Add">
+    <form action="{{ url_for('course_ta_history', session_id=session_id) }}" method="POST" style="text-align: center;">
+      <input type="hidden" name="choice" value="ta">
+      <input type="text" placeholder="First Name" id="fname" name="fname" required>
+      <input type="text" placeholder="Last Name" id="lname" name="lname" required>
+      <input type="submit" name="option" value="Find Courses Assigned to TA"><br><br>
     </form>
-
-    <form action="/add_ta/{{session_id}}" method="POST" style="text-align: center;" class="phoneandtablet">
-      <label for="fname" style="text-align: center;">First name:</label><br>
-      <input type="text" id="fname" name="fname" required style="width: 50%;"><br>
-      <label for="lname" style="text-align: center;">Last name:</label><br>
-      <input type="text" id="lname" name="lname" required style="width: 50%;"><br><br>
-      <label for="sid" style="text-align: center;">Student ID:</label><br>
-      <input type="number" id="sid" name="sid" required style="width: 50%;"><br><br>
-      <label for="course_num" style="text-align: center;">Course Number:</label><br>
-      <input type="text" id="course_num" name="course_num" placeholder="E.g. Comp 307" required style="width: 50%;"><br><br>
-      <label for="course_term" style="text-align: center;">Course Term:</label><br>
-      <input type="text" id="course_term" name="course_term" placeholder="E.g. Fall 2022" required style="width: 50%;"><br><br>
-      <label for="hours" style="text-align: center;">Assigned Hours:</label><br>
-      <input type="number" id="hours" name="hours" required style="width: 50%;"><br><br>
     
-      <hr>
-      <br>
-      <h3>Required Fields for New Users</h3>
-      <label for="email" style="text-align: center;">Email:</label><br>
-      <input type="email" id="email" name="email" style="width: 50%;"><br><br>
-    
-      <label for="group" style="text-align: center;">Student or Instructor:</label><br>
-      <select name="group" id="group" style="width: 50%;">
-      <option value="student">Student</option>
-      <option value="instructor">Instructor</option>
-        
-      </select>
-      <br><br>
-    
-      <hr>
-      <input type="submit" value="Add">
+    <p style="text-align: center; font-size: 24px; font-weight: 400;" class="desktop">To see all terms leave the field blank</p>
+    <p style="text-align: center; font-size: 20px; font-weight: 400;" class="phoneandtablet">To see all terms leave the field blank</p>
+    <br>
+    <form action="{{ url_for('course_ta_history', session_id=session_id) }}" method="POST" style="text-align: center;">
+      <input type="hidden" name="choice" value="course">
+      <input type="text" placeholder="Course No. e.g. Comp 307" id="course_num" name="course_num">
+      <input type="text" placeholder="Course Term e.g. Fall 2022" id="course_term" name="course_term">
+      <input type="submit" name="option" value="Find TAs in Course"><br><br>
     </form>
-    <div style="text-align: center; color: #C24C7C">{{msg}}</div>
-    <br><br><br>
+    <div style="overflow-x:auto;">
+      <table class="tablecenter">
+        <tr>
+            {% for header in headings %}
+            <th style="background-color: #90BDEF; border-radius: 5px">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in data %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div style="text-align: center; color: #C24C7C;">{{msg}}</div>
   </body>
+  
+
+
+
+
+
+
+
+
+
+

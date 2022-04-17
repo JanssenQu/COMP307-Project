@@ -185,28 +185,30 @@ def reactivate_user(user_id):
 
 
 # Below is part of manual and csv import of prof course
-
-def add_prof_course_cvs_to_db(filepath):
+# return -1 only if the file has the wrong number of columns in that case no lines will be added
+def add_csv_to_db(filepath, add_func):
     lines_failed_to_add = []
+    error_code = 0
     with open(filepath) as file:
         csv_file = csv.reader(file)
+        line = 0
+        header_len = 0
         for row in csv_file:
-            # check if in the db
-            if len(row) == 4:  # check formatting
-                term_month_year, course_num, course_name, instructor_assigned_name = row[0], row[1], row[2], \
-                                                                                     row[3]
-                if term_month_year == 'term_month_year' and course_num == 'course_num' and course_name == 'course_name' and instructor_assigned_name == 'instructor_assigned_name':
-                    continue
-
-                added = add_prof_course_to_db(term_month_year, course_num, course_name, instructor_assigned_name)
+            if line == 0:
+                header_len = len(row)
+            elif header_len == len(row):
+                if add_func.__code__.co_argcount != len(row):
+                    return ([], -1)
+                added = add_func(*row)
                 if not added:
                     lines_failed_to_add.append(row)
             else:
                 lines_failed_to_add.append(row)
+            line += 1
 
     os.remove(filepath)
 
-    return lines_failed_to_add
+    return (lines_failed_to_add, error_code)
 
 
 
@@ -286,7 +288,7 @@ def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_a
 
         # case 3
         if course_id is not None:
-            mutate_db('INSERT INTO course_terms VALUES (?,?)', [course_id, term_month_year])
+            mutate_db('INSERT INTO course_terms VALUES (?,?,?,?)', [course_id, term_month_year, None, None])
             mutate_db('INSERT INTO teaching_courses VALUES (?,?,?)', [user_id, course_id, term_month_year])
             return True
 
@@ -296,7 +298,7 @@ def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_a
                               f"WHERE course_name = '{course_name}' AND course_num = '{course_num}'")
         for value in course_ids:
             course_id = dict(value).get("course_id")
-        mutate_db('INSERT INTO course_terms VALUES (?,?)', [course_id, term_month_year])
+        mutate_db('INSERT INTO course_terms VALUES (?,?,?,?)', [course_id, term_month_year, None, None])
         mutate_db('INSERT INTO teaching_courses VALUES (?,?,?)', [user_id, course_id, term_month_year])
         return True
 

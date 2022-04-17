@@ -1,0 +1,400 @@
+<!---
+    Page description below
+
+    Search form
+
+    Section 1 TA personal info
+    -TA_name as title
+    legal_name, Student_ID, email, phone, location, degree, grad_ugrad, supervisor_name
+
+
+    Section 2 TA cohort
+    term_month_year, priority(yes/no), hours(90/180), date_applied, courses_applied_for, open_to_other_courses(yes/no), notes
+
+    Section 3 Reviews
+    -Average rating
+    -student rating comments
+
+    Section 4
+    -professor performance log
+
+    Section 5
+    -prof wish list membership
+
+    Section 6
+    -the courses that are currently assigned to the TA this term
+
+--->
+<!DOCTYPE html>
+<html>
+  <title>TA Info History</title>
+  <head>
+    <script>
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    </script>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
+
+
+      .alignleft {
+	      float: left;
+        width: 40%;
+      }
+
+      .alignright {
+	      float: right;
+        width: 40%;
+        padding-right: 10%;
+      }
+
+      .alignrighttwo{
+        float: right;
+      }
+
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #C24C7C;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      label{
+        display: inline-block;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      input[type=text], select {
+        width: 20%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=password], select {
+        width: 20%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=email], select {
+        width: 20%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=number], select {
+        width: 20%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 16px;
+        box-sizing: border-box;
+        margin: 0%;
+      }
+
+      input[type=checkbox], select{
+        display: inline-block;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .tablecenter {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .overflow {
+        overflow-x: auto;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .blocktext {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+
+      .blocktextdevice {
+        margin-left: auto;
+        margin-right: auto;
+        width: 70%;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      label{
+        display: inline-block;
+        /* float: left; */
+        clear: left;
+        width: 20%;
+        text-align: left;
+      }
+      input{
+        display: inline-block;
+        /* float: left; */
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+    <div class="line"></div>
+    <div id="textbox">
+      <p class="alignleft desktop" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > TA Admin > <u>TA Info History</u> </p>
+      <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">Back to TA Admin</button></div>
+    </div>
+    <br><br><br><br>
+    <img src="{{url_for('static', filename='history.png')}}" style="width: 15%;" class="imgcenter desktop">
+    <img src="{{url_for('static', filename='history.png')}}" style="width: 25%;" class="imgcenter phoneandtablet">
+    <p style="text-align: center; font-size: 48px; font-weight: 700;" class="desktop">TA Info History</p>
+    <p style="text-align: center; font-size: 38px; font-weight: 600;" class="phoneandtablet">TA Info History</p>
+    <br>
+    <form action="{{ url_for('ta_info_history', session_id=session_id) }}" method="POST" style="text-align: center;">
+        <input type="text" placeholder="First Name" id="fname" name="fname" required>
+        <input type="text" placeholder="Last Name" id="lname" name="lname" required>
+        <input type="submit" name="option" value="Find"><br><br>
+    </form>
+    <div style="text-align:center; color: #C24C7C;">{{msg}}</div>
+    <br><br>
+    <h2 style="text-align:center;">{{fname}} {{lname}} Personal info</h2>
+    <p style="text-align: center;">Displays the Personal Information of the TA</p>
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr >
+            <th style="background-color: #90BDEF; border-radius: 5px">Legal Name</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Student ID</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Email</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Phone</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Location</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Degree</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Grad Undergrad</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Supervisor</th>
+        </tr>
+        {% for row in personal_info %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+    
+    
+    <!--- Display name of chosen ta and personal info--->
+    <h2 style="text-align:center;">{{fname}} {{lname}} Application info</h2>
+    <p style="text-align: center;">More about TA application and Availabilities</p>
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr >
+            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Courses Applied</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Priority</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Hours</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Date Applied</th>
+            <th style="background-color: #90BDEF; border-radius: 5px" >Open to Other Courses</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Notes</th>
+        </tr>
+        {% for row in ta_application %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+    
+    
+    
+    <!--- display rating and comments--->
+    <h2 style="text-align:center;">Rating</h2>
+    <p style="text-align: center;">How others rated this TA</p>
+    <div style="text-align:center;"> TA Average Rating: {{avg_rating}} </div>
+    <br>
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr>
+            <th style="background-color: #90BDEF; border-radius: 5px">Rating</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Comments</th>
+        </tr>
+        {% for row in reviews %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+    
+    <!--- display perf log --->
+    <h2 style="text-align:center;">Performance</h2>
+    <p style="text-align: center;">Performance Logs for this TA</p>
+    
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr>
+            <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Comment</th>
+        </tr>
+        {% for row in performance %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+    
+    <!--- display wishlist--->
+    <h2 style="text-align:center;">Wishlist</h2>
+    <p style="text-align: center;">Displays if the TA pertains to any Wishlists</p>
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr>
+            <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
+        </tr>
+        {% for row in wishlist %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+    
+    
+    <!--- display courses assigned to--->
+    <h2 style="text-align:center;">Assigned to</h2>
+    <p style="text-align: center;">Current Assignments</p>
+    <div class="overflow">
+        <table class="tablecenter">
+        <tr>
+            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
+            <th style="background-color: #90BDEF; border-radius: 5px">hours</th>
+        </tr>
+        {% for row in ta_courses %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <br>
+</body>
+
+
+
+

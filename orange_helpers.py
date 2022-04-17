@@ -1,6 +1,8 @@
+from sqlalchemy import false
 from database import *
 from blue_helpers import *
 from user_registration_and_yellow_helpers import *
+
 
 def find_user_id_by_name_and_school_id(fname, lname, school_id):
     # find potential user_id based on first name last name
@@ -75,3 +77,128 @@ def remove_ta(fname, lname, student_id, course_num, course_term):
 
     return True
 
+
+def get_first_value(query_result, col_name):
+    if query_result is None:
+        return None
+    for values in query_result:
+        return dict(values).get(col_name)
+    return None
+
+
+def add_course_quota_to_db(term_month_year, course_num, course_type, course_name,
+instructor_name, course_enrollment_num, TA_quota):
+    '''
+    Add a row of CourseQuota.csv into the database
+    Assumes that the instructor exists in the database
+    Stores data about courses and instructor to be seen by the ta admin
+
+    Tables affected: courses, teaching_courses, course_terms
+
+    :return: true if successfully added
+    '''
+    course_id = get_course_id(course_num)
+    fname, lname = name_splitter(instructor_name)
+    user_id_query = query_db(f"Select user_id FROM users WHERE first_name = '{fname}' AND last_name = '{lname}'")
+
+    user_id = get_first_value(user_id_query,'user_id')
+
+    if user_id:
+        if not course_id:
+            mutate_db("INSERT INTO courses VALUES (?, ?, ?, ?)", [None, course_name, course_num, course_type])
+            course_id = get_course_id(course_num)
+
+        already_teaching = query_db(f"Select user_id FROM teaching_courses WHERE user_id = {user_id} AND "
+                                 f"course_id = {course_id} AND course_term = '{term_month_year}'")
+        if not already_teaching:
+            mutate_db("INSERT INTO teaching_courses VALUES (?, ?, ?)", [user_id, course_id, term_month_year])
+
+
+        already_set = query_db(f"Select course_id FROM course_terms WHERE course_id = {course_id} AND "
+                                 f"course_term = '{term_month_year}'")
+        if not already_set:
+            mutate_db("INSERT INTO course_terms VALUES (?, ?, ?, ?)", [course_id, term_month_year, int(course_enrollment_num), int(TA_quota)])
+            return True
+        else:
+            mutate_db(f"UPDATE course_terms \n"
+                      f"SET course_enroll_num = {int(course_enrollment_num)}, ta_quota = {int(TA_quota)} \n"
+                      f"WHERE course_id = {course_id} AND course_term = '{term_month_year}' ")
+            return True
+    else:
+        return False
+
+
+def add_ta_cohort_to_db(term_month_year, TA_name, student_ID,
+legal_name, email, grad_ugrad, supervisor_name, priority, hours, date_applied,
+location, phone, degree, courses_applied_for, open_to_other_courses, notes):
+    """
+    Add a row of TACohort.csv into the database
+
+    Assumes that the ta are students
+    If no in db will register the ta into users, students, and tas
+
+    Tables affected: users, students, tas, ta_cohort, ta_applied_courses
+
+    Stores data about ta applicants to be seen by the ta admin
+
+    :return: true if successfully added
+    """
+
+    # see if user is in db
+    fname, lname = name_splitter(TA_name)
+    user_id_query = query_db(f"Select user_id FROM users "
+                        f"WHERE first_name = '{fname}' AND last_name = '{lname}'")
+    user_id = get_first_value(user_id_query,'user_id')
+
+    # add if new
+    if not user_id:
+        add_user(student_ID, fname, lname, email, None, None, student=True, ta=True, prof=False, admin=False,
+             sysop=False)
+        user_id_query = query_db(f"Select user_id FROM users "
+                                 f"WHERE first_name = '{fname}' AND last_name = '{lname}'")
+        user_id = get_first_value(user_id_query, 'user_id')
+    else:
+        # updates the student to TA also updates the fields student_ID, fname, lname, email
+        # change it to "" to leave student_ID, fname, lname, email as it was
+        update_user(user_id, student_ID, fname, lname, email, "", "", True, True, False, False, False)
+
+    # update the fields that were not supported by add_user() and update_user
+    mutate_db(f"UPDATE users \n"
+              f"SET legal_name = '{legal_name}', location = '{location}', phone = '{phone}' \n"
+              f"WHERE user_id = {user_id} ")
+    mutate_db(f"UPDATE students \n"
+              f"SET grad_ugrad = '{grad_ugrad}', supervisor_name = '{supervisor_name}', degree = '{degree}' \n"
+              f"WHERE user_id = {user_id} ")
+
+    # turns yes/no string into bit
+    bool_dict = {'yes': 1, 'no': 0}
+    # see if already in cohort before adding
+    already_applied_query = query_db(f"Select cohort_id FROM ta_cohort "
+                                     f"WHERE user_id = {user_id} AND priority = {bool_dict[priority]} "
+                                     f"AND hours = {hours} AND date_applied = '{date_applied}' AND "
+                                     f"open_to_other_courses = {bool_dict[open_to_other_courses]} AND "
+                                     f"notes = '{notes}'")
+    in_cohort = get_first_value(already_applied_query, 'cohort_id')
+    if not in_cohort:
+        mutate_db("INSERT INTO ta_cohort VALUES (?, ?, ?, ?, ?, ?, ?)", [None, user_id, bool_dict[priority], hours, date_applied, bool_dict[open_to_other_courses], notes])
+
+    query_cohort_id = query_db(f"Select cohort_id FROM ta_cohort "
+                               f"WHERE user_id = {user_id} AND priority = {bool_dict[priority]} AND hours = {hours} "
+                               f"AND date_applied = '{date_applied}' AND "
+                               f"open_to_other_courses = {bool_dict[open_to_other_courses]} AND notes = '{notes}'")
+    cohort_id = get_first_value(query_cohort_id,'cohort_id')
+
+    courses = courses_applied_for.split(",")
+    for course in courses:
+        # take out spaces at start and end
+        course_id = get_course_id(course.strip())
+        if course_id is None: # course not in website
+            return False
+        # see if already in ta_applied_courses before adding
+        already_applied_query = query_db(f"Select cohort_id FROM ta_applied_courses "
+                                 f"WHERE cohort_id = {cohort_id} AND course_id = {course_id} AND course_term = '{term_month_year}'")
+        already_applied = get_first_value(already_applied_query, 'cohort_id')
+        if course_id and not already_applied:
+            mutate_db("INSERT INTO ta_applied_courses VALUES (?, ?, ?)", [cohort_id, course_id, term_month_year])
+
+    return True
