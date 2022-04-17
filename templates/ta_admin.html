@@ -1,26 +1,236 @@
-<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
-<h1>TA Administration</h1>
+<!DOCTYPE html>
+<html>
+  <title>TA Admin</title>
+  <head>
+    <script>
+        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    </script>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
 
-<a href="{{ url_for('ta_info_history') }}{{session_id}}">TA Info History</a>
-<a href="{{ url_for('course_ta_history') }}{{session_id}}">Course TA History</a>
-<a href="{{ url_for('add_ta') }}{{session_id}}">Add TA</a>
-<a href="{{ url_for('remove_ta') }}{{session_id}}">Remove TA</a><br><br>
 
-<hr>
+      .alignleft {
+	      float: left;
+        width: 40%;
+      }
 
-<h2>File Upload</h2>
-<p>Upload Course Quota before TA Cohort</p>
-<p>Choose file type:</p>
-<form action="{{ url_for('ta_admin') }}{{session_id}}" method="POST" enctype="multipart/form-data">
-    <input type="radio" id="course_quota" name="file_type" value="course_quota">
-    <label for="course_quota">Course Quota</label><br>
-    <input type="radio" id="ta_cohort" name="file_type" value="ta_cohort">
-    <label for="ta_cohort">TA Cohort</label><br> <br>
-    <label for="file">Select a file:</label><br>
-    <input type="file" id="file" name="file" />
-    <br /><br />
-    <input type="submit"/>
-</form>
-<div>{{msg}}</div>
+      .alignright {
+	      float: right;
+        width: 40%;
+        padding-right: 10%;
+      }
+
+      .alignrighttwo{
+        float: right;
+      }
+
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #C24C7C;
+      }
+
+      .buttontwo {
+        width: auto;
+        font-size: 15px;
+        background-color: #C24C7C;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .buttontwo:hover {
+        background-color: #F6A72E;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div id="textbox">
+          <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > <u>TA Admin</u> </p>
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+        </div>
+        <br><br><br><br>
+        <p style="font-size: 38px; padding-left: 5%;">Looking for other Admin Features?</p>
+        <div style="text-align: center;">
+            <button class="buttontwo"><a href="{{ url_for('ta_info_history') }}{{session_id}}" style="text-decoration: none; color: white;">TA Info History</a></button>
+            <button class="buttontwo"><a href="{{ url_for('course_ta_history') }}{{session_id}}" style="text-decoration: none; color: white;">Course TA History</a></button>
+            <button class="buttontwo"><a href="{{ url_for('add_ta') }}{{session_id}}" style="text-decoration: none; color: white;">Add TA</a></button>
+            <button class="buttontwo"><a href="{{ url_for('remove_ta') }}{{session_id}}" style="text-decoration: none; color: white;">Remove TA</a></button>
+        </div>
+        <div id="textbox" style="margin: 0%;">
+            <div class="alignright">
+              <br><br>
+              <p style="padding-left: 5%; font-size: 48px; font-weight: 700;">Import TA Cohort From CSV</h1>
+                <br><br>
+              <p style="padding-left: 5%; font-size: 36px; font-weight: 700;">Importing Cohort permits you to import the list of McGill Teaching Assistants Hired by the University for that Semester </p>
+              <br><br>
+              <p style="padding-left: 5%; font-size: 24px; font-weight: 400;">Warning: Course quota must be uploaded before TA Cohort File.</p>
+              <br><br>
+                <p style="font-size: 20px; font-weight: 400; text-align: center;">Choose file type:</p>
+                <br>
+                <form action="{{ url_for('ta_admin') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                    <input type="radio" id="course_quota" name="file_type" value="course_quota">
+                    <label for="course_quota">Course Quota</label><br>
+                    <br>
+                    <input type="radio" id="ta_cohort" name="file_type" value="ta_cohort">
+                    <label for="ta_cohort">TA Cohort</label><br> <br>
+                    <label for="file" style="font-size: 20px; font-weight: 400;">Select a file:</label><br><br>
+                    <input type="file" id="file" name="file" />
+                    <br /><br />
+                    <input type="submit"/>
+                    <div style="text-align: center; color: red;">{{msg}}</div>
+                </form>
+                
+            </div>
+            <div class="alignleft" ><img src="{{url_for('static', filename='admin.png')}}" style="width: 90%; padding-left: 15%;">
+                <h1 style="text-align: center; padding-left: 10%;">Welcome to the TA Admin Page!</h1>
+            </div>
+          </div>
+        </div>
+        <br><br>
+    </div>
+
+    <div class="phoneandtablet">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <div class="line"></div>
+        <div id="textbox">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+        </div>
+        <br><br><br>
+        <p style="font-size: 28px; text-align: center;">Looking for other Admin Features?</p>
+        <div style="text-align: center;">
+            <button class="buttontwo"><a href="{{ url_for('ta_info_history') }}{{session_id}}" style="text-decoration: none; color: white;">TA Info History</a></button>
+            <button class="buttontwo"><a href="{{ url_for('course_ta_history') }}{{session_id}}" style="text-decoration: none; color: white;">Course TA History</a></button>
+            <button class="buttontwo"><a href="{{ url_for('add_ta') }}{{session_id}}" style="text-decoration: none; color: white;">Add TA</a></button>
+            <button class="buttontwo"><a href="{{ url_for('remove_ta') }}{{session_id}}" style="text-decoration: none; color: white;">Remove TA</a></button>
+            <img src="{{url_for('static', filename='admin.png')}}" style="width: 60%;" class="imgcenter">
+
+            <br>
+            <p style="text-align: center; font-size: 30px; font-weight: 700;">Import TA Cohort From CSV</h1>
+            <br>
+            <p style="text-align: center; font-size: 20px; font-weight: 500;">Importing Cohort permits you to import the list of McGill Teaching Assistants Hired by the University for that Semester </p>
+            <br>
+            <p style="text-align: center; font-size: 20px; font-weight: 400;">Warning: Course quota must be uploaded before TA Cohort File.</p>
+            <br>
+            <p style="font-size: 20px; font-weight: 400; text-align: center;">Choose file type:</p>
+            <br>
+            <form action="{{ url_for('ta_admin') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                <input type="radio" id="course_quota" name="file_type" value="course_quota">
+                <label for="course_quota">Course Quota</label><br>
+                <br>
+                <input type="radio" id="ta_cohort" name="file_type" value="ta_cohort">
+                <label for="ta_cohort">TA Cohort</label><br> <br>
+                <label for="file" style="font-size: 20px; font-weight: 400;">Select a file:</label><br><br>
+                <input type="file" id="file" name="file" />
+                <br /><br />
+                <input type="submit"/>
+                <div style="text-align: center; color: red;">{{msg}}</div>
+            </form>
+            <br><br>
+        </div>
+    </div>
+
+
+
+  </body>
+
 
 
