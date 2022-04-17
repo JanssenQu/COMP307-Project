@@ -178,6 +178,16 @@
         display: inline;
       }
 
+      tr {
+        background-color: #90BDEF;
+        border-radius: 2px;
+      }
+
+      td {
+        background-color: #D9D9D9;
+        border-radius: 2px;
+      }
+
       .desktop{
         display: block;
       }
@@ -234,15 +244,15 @@
           <div style="text-align: center; overflow-x:auto;">
             <table class="tablecenter" style="border-radius: 10px;">
               <tr>
-                  {% for header in headings %}
-                  <th style="margin-left: 2px; margin-right: 2px; background-color: #CFE2F3;">{{ header }}</th>
-                  {% endfor %}
+                {% for header in headings %}
+                <th>{{ header }}</th>
+                {% endfor %}
               </tr>
               {% for row in data %}
               <tr>
-                  {% for cell in row %}
-                  <td style="background-color: beige;">{{ cell }}</td>
-                  {% endfor %}
+                {% for cell in row %}
+                <td>{{ cell }}</td>
+                {% endfor %}
               </tr>
               {% endfor %}
             </table>

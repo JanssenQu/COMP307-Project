@@ -186,6 +186,16 @@
         /* float: left; */
       }
 
+      tr {
+        background-color: #90BDEF;
+        border-radius: 2px;
+      }
+
+      td {
+        background-color: #D9D9D9;
+        border-radius: 2px;
+      }
+
       /* DESKTOP SIZE */
       @media only screen and (min-width: 1024px){
         .phoneandtablet {display: none;}
@@ -230,15 +240,15 @@
     <div style="overflow-x:auto;">
       <table class="tablecenter">
         <tr>
-            {% for header in headings %}
-            <th style="background-color: #90BDEF; border-radius: 5px">{{ header }}</th>
-            {% endfor %}
+          {% for header in headings %}
+          <th>{{ header }}</th>
+          {% endfor %}
         </tr>
         {% for row in data %}
         <tr>
-            {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
-            {% endfor %}
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
         </tr>
         {% endfor %}
       </table>

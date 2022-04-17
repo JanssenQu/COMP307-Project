@@ -190,6 +190,16 @@
         /* float: left; */
       }
 
+      tr {
+        background-color: #90BDEF;
+        border-radius: 2px;
+      }
+
+      td {
+        background-color: #D9D9D9;
+        border-radius: 2px;
+      }
+
       /* DESKTOP SIZE */
       @media only screen and (min-width: 1024px){
         .phoneandtablet {display: none;}
@@ -226,23 +236,23 @@
     <p style="text-align: center;">Displays the Personal Information of the TA</p>
     <div class="overflow">
         <table class="tablecenter">
-        <tr >
-            <th style="background-color: #90BDEF; border-radius: 5px">Legal Name</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Student ID</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Email</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Phone</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Location</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Degree</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Grad Undergrad</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Supervisor</th>
-        </tr>
-        {% for row in personal_info %}
-        <tr>
+          <tr>
+            <th>Legal Name</th>
+            <th>Student ID</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Degree</th>
+            <th>Grad Undergrad</th>
+            <th>Supervisor</th>
+          </tr>
+          {% for row in personal_info %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
@@ -253,22 +263,22 @@
     <p style="text-align: center;">More about TA application and Availabilities</p>
     <div class="overflow">
         <table class="tablecenter">
-        <tr >
-            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Courses Applied</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Priority</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Hours</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Date Applied</th>
-            <th style="background-color: #90BDEF; border-radius: 5px" >Open to Other Courses</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Notes</th>
-        </tr>
-        {% for row in ta_application %}
-        <tr>
+          <tr>
+            <th>Term</th>
+            <th>Courses Applied</th>
+            <th>Priority</th>
+            <th>Hours</th>
+            <th>Date Applied</th>
+            <th >Open to Other Courses</th>
+            <th>Notes</th>
+          </tr>
+          {% for row in ta_application %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
@@ -282,19 +292,19 @@
     <br>
     <div class="overflow">
         <table class="tablecenter">
-        <tr>
-            <th style="background-color: #90BDEF; border-radius: 5px">Rating</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Comments</th>
-        </tr>
-        {% for row in reviews %}
-        <tr>
+          <tr>
+            <th>Rating</th>
+            <th>Course</th>
+            <th>Term</th>
+            <th>Comments</th>
+          </tr>
+          {% for row in reviews %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
@@ -305,19 +315,19 @@
     
     <div class="overflow">
         <table class="tablecenter">
-        <tr>
-            <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Comment</th>
-        </tr>
-        {% for row in performance %}
-        <tr>
+          <tr>
+            <th>Professor</th>
+            <th>Course</th>
+            <th>Term</th>
+            <th>Comment</th>
+          </tr>
+          {% for row in performance %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
@@ -327,18 +337,18 @@
     <p style="text-align: center;">Displays if the TA pertains to any Wishlists</p>
     <div class="overflow">
         <table class="tablecenter">
-        <tr>
-            <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
-        </tr>
-        {% for row in wishlist %}
-        <tr>
+          <tr>
+            <th>Professor</th>
+            <th>Course</th>
+            <th>Term</th>
+          </tr>
+          {% for row in wishlist %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
@@ -349,18 +359,18 @@
     <p style="text-align: center;">Current Assignments</p>
     <div class="overflow">
         <table class="tablecenter">
-        <tr>
-            <th style="background-color: #90BDEF; border-radius: 5px">Course</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
-            <th style="background-color: #90BDEF; border-radius: 5px">hours</th>
-        </tr>
-        {% for row in ta_courses %}
-        <tr>
+          <tr>
+            <th>Course</th>
+            <th>Term</th>
+            <th>hours</th>
+          </tr>
+          {% for row in ta_courses %}
+          <tr>
             {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            <td>{{ cell }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
         </table>
     </div>
     <br>
