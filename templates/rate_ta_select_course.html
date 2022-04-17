@@ -1,20 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
+  <head>
     <title>Select Term</title>
-    <script>
-      if(device-width <= 428){
-        document.write('<meta name="viewport" content="width=428">');
-      }
-      else if(device-width > 428 && device-width <= 1024){
-        document.write('<meta name="viewport" content="width=1024" >');
-        }
-      else{
-        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-      }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-
       *{
         background-color: #C7DFFA;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -107,43 +96,33 @@
       .alignright {
 	      float: right;
       }
-      
-
-
     </style>
-    <body>
-      
+  </head>
+  <body>
+    <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+    <div class="line"></div>
+    <div id="textbox">
+      <p class="alignleft" style="color: #0F2233; padding-left: 2.5%;">Dashboard > <u>Select Course</u> </p>
+      <div style="padding-top: 15px; padding-right: 2%;"  class="alignright"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+    </div>
+    <br><br><br>
+    <img src="{{url_for('static', filename='course.png')}}" style="width: 38%;" class="imgcenter">
+    <h1 style="text-align: center;"> Choose a Course</h1>
+    
+    <div style="text-align: center;">
+      <form action="/rate_ta/{{session_id}}" method="POST">
+        <input type="hidden" name="choice" value="choose_course">
+        <label for="course" style="font-size: 25px; padding-left: 2%;">Course:</label>
+        <select name="course" id="course" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
+          {% for course in course_list %}
+          <option value="{{course}}">{{course}}</option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <input type="submit" value="Next">
+      </form>
 
-      <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
-      <div class="line"></div>
-      <div id="textbox">
-        <p class="alignleft" style="color: #0F2233; padding-left: 2.5%;">Dashboard > <u>Select Course</u> </p>
-        <div style="padding-top: 15px; padding-right: 2%;"  class="alignright"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
-      </div>
-      <br><br><br>
-      <img src="{{url_for('static', filename='course.png')}}" style="width: 38%;" class="imgcenter">
-      <h1 style="text-align: center;"> Choose a Course</h1>
-      
-      <div style="text-align: center;">
-        <form action="/rate_ta/{{session_id}}" method="POST">
-          <input type="hidden" name="choice" value="choose_course">
-          <label for="course" style="font-size: 25px; padding-left: 2%;">Course:</label>
-          <select name="course" id="course" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
-            {% for course in course_list %}
-            <option value="{{course}}">{{course}}</option>
-            {% endfor %}
-          </select>
-          <br><br>
-          <input type="submit" value="Next">
-        </form>
-
-        <div style="text-align: center; color: red;">{{msg}}</div>
-      </div>
-    </body>
+      <div style="text-align: center; color: red;">{{msg}}</div>
+    </div>
+  </body>
 </html>
-
-
-
-
-
-
