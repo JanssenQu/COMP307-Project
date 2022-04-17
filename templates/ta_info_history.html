@@ -183,6 +183,10 @@
         margin-right: auto;
       }
 
+      .overflow {
+        overflow-x: auto;
+      }
+
       .desktop{
         width: auto;
       }
@@ -249,7 +253,7 @@
     <br><br>
     <h2 style="text-align:center;">{{fname}} {{lname}} Personal info</h2>
     <p style="text-align: center;">Displays the Personal Information of the TA</p>
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr >
             <th style="background-color: #90BDEF; border-radius: 5px">Legal Name</th>
@@ -276,7 +280,7 @@
     <!--- Display name of chosen ta and personal info--->
     <h2 style="text-align:center;">{{fname}} {{lname}} Application info</h2>
     <p style="text-align: center;">More about TA application and Availabilities</p>
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr >
             <th style="background-color: #90BDEF; border-radius: 5px">Term</th>
@@ -305,7 +309,7 @@
     <p style="text-align: center;">How others rated this TA</p>
     <div style="text-align:center;"> TA Average Rating: {{avg_rating}} </div>
     <br>
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr>
             <th style="background-color: #90BDEF; border-radius: 5px">Rating</th>
@@ -328,7 +332,7 @@
     <h2 style="text-align:center;">Performance</h2>
     <p style="text-align: center;">Performance Logs for this TA</p>
     
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr>
             <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
@@ -350,7 +354,7 @@
     <!--- display wishlist--->
     <h2 style="text-align:center;">Wishlist</h2>
     <p style="text-align: center;">Displays if the TA pertains to any Wishlists</p>
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr>
             <th style="background-color: #90BDEF; border-radius: 5px">Professor</th>
@@ -372,7 +376,7 @@
     <!--- display courses assigned to--->
     <h2 style="text-align:center;">Assigned to</h2>
     <p style="text-align: center;">Current Assignments</p>
-    <div>
+    <div class="overflow">
         <table class="tablecenter">
         <tr>
             <th style="background-color: #90BDEF; border-radius: 5px">Course</th>

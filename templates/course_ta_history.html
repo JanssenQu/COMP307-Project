@@ -229,21 +229,22 @@
       <input type="text" placeholder="Course Term e.g. Fall 2022" id="course_term" name="course_term">
       <input type="submit" name="option" value="Find TAs in Course"><br><br>
     </form>
-
-    <table class="tablecenter">
-      <tr>
-          {% for header in headings %}
-          <th style="background-color: #90BDEF; border-radius: 5px">{{ header }}</th>
-          {% endfor %}
-      </tr>
-      {% for row in data %}
-      <tr>
-          {% for cell in row %}
-          <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
-          {% endfor %}
-      </tr>
-      {% endfor %}
-    </table>
+    <div style="overflow-x:auto;">
+      <table class="tablecenter">
+        <tr>
+            {% for header in headings %}
+            <th style="background-color: #90BDEF; border-radius: 5px">{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in data %}
+        <tr>
+            {% for cell in row %}
+            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
     <div style="text-align: center; color: #C24C7C;">{{msg}}</div>
   </body>
   
