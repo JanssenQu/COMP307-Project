@@ -2,9 +2,7 @@
 <html>
   <title>Dashboard</title>
   <head>
-    <script>
-        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       *{
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -37,7 +35,7 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        margin: 0px 2px;
+        margin: 10px;
         cursor: pointer;
         border-radius: 20px;
         font-size: 15px;
@@ -119,6 +117,10 @@
         margin-right: auto;
       }
 
+      .menu {
+        text-align: center;
+      }
+
       .desktop{
         width: auto;
       }
@@ -135,13 +137,17 @@
       /* TABLET - PHONE SIZE */
       @media only screen and (max-width: 1150px){
         .desktop {display: none;}
+        .button {display: block; margin-left: auto; margin-right: auto;}
       }
 
     </style>
   </head>
   <body>
     <div class="desktop">
-        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p><div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <form action="" method="POST">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        </form>
         <div class="line"></div>
         <br><br>
         <div id="textbox">
@@ -153,15 +159,17 @@
                 <br><br>
                 <p style="padding-left: 10%; font-size: 24px; font-weight: 400;">A-TA  Permits to Gain Time, Improve Students-TAs-Teachers Relationship, Stay Organised and Overall Increase Success!</p>
                 <br><br>
-                <div style="text-align: center;">
-                    <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">{{ta_admin}}</button>
-                    <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">{{ta_management}}</button>
-                    <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button>
-                    <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">{{sysop_tasks}}</button>
-                
-                    <form action="" method="POST">
-        
-                    </form>
+                <div class="menu">
+                  {% if ta_admin %}
+                  <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">TA Admin</button>
+                  {% endif %}
+                  {% if ta_management %}
+                  <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">TA Management</button>
+                  {% endif %}
+                  <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button>
+                  {% if sysop_tasks %}
+                  <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Sysop Tasks</button>
+                  {% endif %}
                 </div>
             </div>
             <div class="alignleft" ><img src="{{url_for('static', filename='dashboard.png')}}" style="width: 100%; padding-top: 10%;"></div>
@@ -169,21 +177,25 @@
         <br><br><br><br>
     </div>
     <div class="phoneandtablet">
-        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p><div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <form action="" method="POST">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        </form>
         <div class="line"></div>
         <br><br><br>
         <img src="{{url_for('static', filename='dashboard.png')}}" style="width: 60%;" class="imgcenter">
         <br><br>
-        <div style="text-align: center;">
-
-            <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">{{ta_admin}}</button><br><br>
-            <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">{{ta_management}}</button><br><br>
-            <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button><br><br>
-            <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">{{sysop_tasks}}</button><br><br>
-        
-            <form action="" method="POST">
-
-            </form>
+        <div class="menu">
+            {% if ta_admin %}
+            <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">TA Admin</button>
+            {% endif %}
+            {% if ta_management %}
+            <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">TA Management</button>
+            {% endif %}
+            <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button>
+            {% if sysop_tasks %}
+            <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Sysop Tasks</button>
+            {% endif %}
         </div>
         <p style="text-align: center; font-size: 38px; font-weight: 600;">Welcome Back to A-TA!</h1>
         <br>
@@ -193,5 +205,6 @@
         <br><br>
     </div>
   </body>
+</html>
 
 
