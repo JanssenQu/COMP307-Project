@@ -4,6 +4,8 @@ from rate_ta_helper import *
 from session import *
 from user_registration_and_yellow_helpers import *
 from orange_helpers import *
+from ta_history import *
+
 
 def page_decorator(page, post_func, session_id, *args):
     if session_id is None:
@@ -25,15 +27,15 @@ def dashboard_post(session_id):
         delete_session(session_id)
         return redirect(url_for("logout"))
 
-    ta_admin =''
+    ta_admin = ''
     if has_access_to_orange(session_id):
         ta_admin = "TA Admin"
 
-    ta_management =''
+    ta_management = ''
     if has_access_to_blue(session_id):
         ta_management = "TA Management"
 
-    sysop_tasks =''
+    sysop_tasks = ''
     if check_group(User.sys_op, session_id):
         sysop_tasks = "Sysop Tasks"
 
@@ -120,12 +122,53 @@ def ta_admin_post(session_id):
                     lines_failed_to_add = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
                 if len(lines_failed_to_add) > 0:
-                    msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor must be registered'
+                    msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor and course must be registered'
 
                 return render_template('ta_admin.html', msg=msg, session_id=session_id)
 
         return render_template('ta_admin.html', session_id=session_id)
 
+
+def ta_info_history_post(session_id):
+    if has_access_to_orange(session_id):
+        if request.method == 'POST':
+            fname = request.form["fname"]
+            lname = request.form["lname"]
+            if not user_in_db(fname, lname):
+                return render_template('ta_info_history.html', session_id=session_id, msg='User not registred in the website')
+            personal_info = get_user_data(get_ta_personal_info, fname,lname)
+            ta_application = get_user_data(get_application_details, fname, lname)
+            avg_rating = get_user_data(get_average_rating_of_ta, fname, lname, "NA")
+            reviews = get_user_data(get_rating_comments_of_ta, fname, lname)
+            performance = get_user_data(get_performance_log_of_ta, fname, lname)
+            wishlist = get_user_data(get_wishlist, fname, lname)
+            ta_courses = get_user_data(get_ta_courses, fname, lname)
+            return render_template('ta_info_history.html',session_id=session_id, fname=fname, lname=lname,
+                                   personal_info=personal_info, ta_application=ta_application, avg_rating=avg_rating,
+                                   reviews=reviews, performance=performance, wishlist=wishlist, ta_courses=ta_courses)
+
+        return render_template('ta_info_history.html', session_id=session_id)
+
+
+def course_ta_history_post(session_id):
+    if has_access_to_orange(session_id):
+        if request.method == 'POST':
+            if request.form["choice"] == "ta":
+                fname = request.form["fname"]
+                lname = request.form["lname"]
+                if not user_in_db(fname, lname):
+                    return render_template('course_ta_history.html', session_id=session_id,
+                                           msg='User not registred in the website')
+                headings = ("Course","Term")
+                data = get_courses_of_ta(fname, lname)
+            if request.form["choice"] == "course":
+                headings = ("Name","Term")
+                course_num = request.form["course_num"]
+                course_term = request.form["course_term"]
+                data = get_tas_of_course(course_num,course_term)
+            return render_template('course_ta_history.html', session_id=session_id, headings=headings, data=data)
+
+        return render_template('course_ta_history.html', session_id=session_id)
 
 
 def add_ta_post(session_id):
@@ -149,7 +192,6 @@ def add_ta_post(session_id):
         return render_template('add_ta.html', session_id=session_id)
 
 
-
 def remove_ta_post(session_id):
     if has_access_to_orange(session_id):
         if request.method == 'POST':
@@ -165,7 +207,6 @@ def remove_ta_post(session_id):
                 return render_template('remove_ta.html', session_id=session_id,msg="Action not possible check inputs")
 
         return render_template('remove_ta.html', session_id=session_id)
-
 
 
 def ta_management_dashboard_post(session_id, course_id, course_num):

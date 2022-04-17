@@ -95,13 +95,6 @@ instructor_name, course_enrollment_num, TA_quota):
 
     Tables affected: courses, teaching_courses, course_terms
 
-    :param term_month_year: field from csv
-    :param course_num: field from csv
-    :param course_type: field from csv
-    :param course_name: field from csv
-    :param instructor_name: field from csv
-    :param course_enrollment_num: field from csv
-    :param TA_quota: field from csv
     :return: true if successfully added
     '''
     course_id = get_course_id(course_num)
@@ -147,22 +140,7 @@ location, phone, degree, courses_applied_for, open_to_other_courses, notes):
     Tables affected: users, students, tas, ta_cohort, ta_applied_courses
 
     Stores data about ta applicants to be seen by the ta admin
-    :param term_month_year: field from csv
-    :param TA_name: field from csv
-    :param student_ID: field from csv
-    :param legal_name: field from csv
-    :param email: field from csv
-    :param grad_ugrad: field from csv
-    :param supervisor_name: field from csv
-    :param priority: field from csv
-    :param hours: field from csv
-    :param date_applied: field from csv
-    :param location: field from csv
-    :param phone: field from csv
-    :param degree: field from csv
-    :param courses_applied_for: field from csv
-    :param open_to_other_courses: field from csv
-    :param notes: field from csv
+
     :return: true if successfully added
     """
 
@@ -214,6 +192,8 @@ location, phone, degree, courses_applied_for, open_to_other_courses, notes):
     for course in courses:
         # take out spaces at start and end
         course_id = get_course_id(course.strip())
+        if course_id is None: # course not in website
+            return False
         # see if already in ta_applied_courses before adding
         already_applied_query = query_db(f"Select cohort_id FROM ta_applied_courses "
                                  f"WHERE cohort_id = {cohort_id} AND course_id = {course_id} AND course_term = '{term_month_year}'")

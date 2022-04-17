@@ -1,10 +1,14 @@
 <a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
 <h1>TA Administration</h1>
 
+<a href="{{ url_for('ta_info_history') }}{{session_id}}">TA Info History</a>
+<a href="{{ url_for('course_ta_history') }}{{session_id}}">Course TA History</a>
+<a href="{{ url_for('add_ta') }}{{session_id}}">Add TA</a>
+<a href="{{ url_for('remove_ta') }}{{session_id}}">Remove TA</a><br><br>
 
-<a href="/add_ta/{{session_id}}">Add TA</a>
-<a href="/remove_ta/{{session_id}}">Remove TA</a><br><br>
+<hr>
 
+<h2>File Upload</h2>
 <p>Upload Course Quota before TA Cohort</p>
 <p>Choose file type:</p>
 <form action="{{ url_for('ta_admin') }}{{session_id}}" method="POST" enctype="multipart/form-data">
@@ -17,6 +21,6 @@
     <br /><br />
     <input type="submit"/>
 </form>
-
+<div>{{msg}}</div>
 
 
