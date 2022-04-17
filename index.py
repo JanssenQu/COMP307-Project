@@ -74,9 +74,21 @@ def rate_ta(session_id=None, course_num=None, course_term=None):
 
 # ORANGE
 @app.route("/ta_admin/")
-@app.route("/ta_admin/<session_id>")
+@app.route("/ta_admin/<session_id>", methods=['GET', 'POST'])
 def ta_admin(session_id=None):
     return page_decorator("ta_admin", ta_admin_post, session_id)
+
+
+@app.route("/ta_info_history/")
+@app.route("/ta_info_history/<session_id>", methods=['GET', 'POST'])
+def ta_info_history(session_id=None):
+    return page_decorator("ta_info_history", ta_info_history_post, session_id)
+
+
+@app.route("/course_ta_history/")
+@app.route("/course_ta_history/<session_id>", methods=['GET', 'POST'])
+def course_ta_history(session_id=None):
+    return page_decorator("course_ta_history", course_ta_history_post, session_id)
 
 
 @app.route("/add_ta/")

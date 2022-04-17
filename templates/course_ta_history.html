@@ -1,0 +1,37 @@
+<a href="{{ url_for('ta_admin', session_id=session_id) }}">Back to TA Admin</a>
+
+
+<h1>Course TA History</h1>
+
+<form action="{{ url_for('course_ta_history', session_id=session_id) }}" method="POST">
+  <input type="hidden" name="choice" value="ta">
+  <input type="text" placeholder="First Name" id="fname" name="fname" required>
+  <input type="text" placeholder="Last Name" id="lname" name="lname" required>
+  <input type="submit" name="option" value="Find Courses Assigned to TA"><br><br>
+</form>
+
+<p>To see all terms leave the field blank</p>
+<form action="{{ url_for('course_ta_history', session_id=session_id) }}" method="POST">
+  <input type="hidden" name="choice" value="course">
+  <input type="text" placeholder="Course No. e.g. Comp 307" id="course_num" name="course_num">
+  <input type="text" placeholder="Course Term e.g. Fall 2022" id="course_term" name="course_term">
+  <input type="submit" name="option" value="Find TAs in Course"><br><br>
+</form>
+
+
+<table>
+    <tr>
+        {% for header in headings %}
+        <th>{{ header }}</th>
+        {% endfor %}
+    </tr>
+    {% for row in data %}
+    <tr>
+        {% for cell in row %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+<div>{{msg}}</div>
