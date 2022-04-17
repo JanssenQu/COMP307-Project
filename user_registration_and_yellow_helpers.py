@@ -288,7 +288,7 @@ def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_a
 
         # case 3
         if course_id is not None:
-            mutate_db('INSERT INTO course_terms VALUES (?,?)', [course_id, term_month_year])
+            mutate_db('INSERT INTO course_terms VALUES (?,?,?,?)', [course_id, term_month_year, None, None])
             mutate_db('INSERT INTO teaching_courses VALUES (?,?,?)', [user_id, course_id, term_month_year])
             return True
 
@@ -298,7 +298,7 @@ def add_prof_course_to_db(term_month_year, course_num, course_name, instructor_a
                               f"WHERE course_name = '{course_name}' AND course_num = '{course_num}'")
         for value in course_ids:
             course_id = dict(value).get("course_id")
-        mutate_db('INSERT INTO course_terms VALUES (?,?)', [course_id, term_month_year])
+        mutate_db('INSERT INTO course_terms VALUES (?,?,?,?)', [course_id, term_month_year, None, None])
         mutate_db('INSERT INTO teaching_courses VALUES (?,?,?)', [user_id, course_id, term_month_year])
         return True
 
