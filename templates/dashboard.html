@@ -1,8 +1,208 @@
-dashboard
-<a href="/ta_admin/{{session_id}}">{{ta_admin}}</a>
-<a href="/ta_management/{{session_id}}">{{ta_management}}</a>
-<a href="/rate_ta/{{session_id}}">Rate a TA</a>
-<a href="/sysop_tasks/{{session_id}}">{{sysop_tasks}}</a>
-<form action="" method="POST">
-    <button type="submit">logout</button>
-</form>
+<!DOCTYPE html>
+<html>
+  <title>Dashboard</title>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
+
+
+      .alignleft {
+	      float: left;
+        width: 45%;
+      }
+
+      .alignright {
+	      float: right;
+        width: 34%;
+        padding-right: 10%;
+      }
+
+      .alignrighttwo{
+        float: right;
+      }
+
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #C24C7C;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #F6A72E;
+      }
+
+      .buttontwo {
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .buttontwo:hover {
+        background-color: #C24C7C;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        display: inline-block;
+        width: 100%;
+        height: 40%;
+        background: #CFE2F3;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .menu {
+        text-align: center;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1150px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1150px){
+        .desktop {display: none;}
+        .button {display: block; margin-left: auto; margin-right: auto;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <form action="" method="POST">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        </form>
+        <div class="line"></div>
+        <br><br>
+        <div id="textbox">
+            <div class="alignright">
+                <br><br><br><br><br><br>
+                <p style="text-align: center; font-size: 48px; font-weight: 700;">Welcome Back to A-TA!</h1>
+                <br><br>
+                <p style="padding-left: 10%; font-size: 36px; font-weight: 700;">A-TA’s Objective is to Make Classes Easier for Teachers, TAs and Students</p>
+                <br><br>
+                <p style="padding-left: 10%; font-size: 24px; font-weight: 400;">A-TA  Permits to Gain Time, Improve Students-TAs-Teachers Relationship, Stay Organised and Overall Increase Success!</p>
+                <br><br>
+                <div class="menu">
+                  {% if ta_admin %}
+                  <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">TA Admin</button>
+                  {% endif %}
+                  {% if ta_management %}
+                  <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">TA Management</button>
+                  {% endif %}
+                  <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button>
+                  {% if sysop_tasks %}
+                  <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Sysop Tasks</button>
+                  {% endif %}
+                </div>
+            </div>
+            <div class="alignleft" ><img src="{{url_for('static', filename='dashboard.png')}}" style="width: 100%; padding-top: 10%;"></div>
+        </div>
+        <br><br><br><br>
+    </div>
+    <div class="phoneandtablet">
+        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+        <form action="" method="POST">
+          <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="buttontwo" type="submit">logout</button></div>
+        </form>
+        <div class="line"></div>
+        <br><br><br>
+        <img src="{{url_for('static', filename='dashboard.png')}}" style="width: 60%;" class="imgcenter">
+        <br><br>
+        <div class="menu">
+            {% if ta_admin %}
+            <button class="button" onclick="window.location.href='/ta_admin/{{session_id}}';">TA Admin</button>
+            {% endif %}
+            {% if ta_management %}
+            <button class="button" onclick="window.location.href='/ta_management/{{session_id}}';">TA Management</button>
+            {% endif %}
+            <button class="button" onclick="window.location.href='/rate_ta/{{session_id}}';">Rate a TA</button>
+            {% if sysop_tasks %}
+            <button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Sysop Tasks</button>
+            {% endif %}
+        </div>
+        <p style="text-align: center; font-size: 38px; font-weight: 600;">Welcome Back to A-TA!</h1>
+        <br>
+        <p style="text-align: center; font-size: 25px; font-weight: 500; margin-left: 5px; margin-right: 5px;">A-TA’s Objective is to Make Classes Easier for Teachers, TAs and Students</p>
+        <br>
+        <p style="text-align: center; font-size: 20px; font-weight: 400; margin-left: 4px; margin-right: 4px;">A-TA  Permits to Gain Time, Improve Students-TAs-Teachers Relationship, Stay Organised and Overall Increase Success!</p>
+        <br><br>
+    </div>
+  </body>
+</html>

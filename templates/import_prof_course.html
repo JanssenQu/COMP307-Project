@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
+  <head>
     <title>Import Course</title>
-    <script>
-        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 
       *{
@@ -115,78 +114,72 @@
       }
       
     </style>
+  </head>
+  <body>
+      <div class="desktop">
+          <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+          <div class="line"></div>
+          <div id="textbox">
+              <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course from CSV file</u></p>
+              <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
+          </div>
+          <br><br><br>
 
-<body>
-    <div class="desktop">
-        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
-        <div class="line"></div>
-        <div id="textbox">
-            <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course from CSV file</u></p>
-            <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
-        </div>
-        <br><br><br>
+          <div>
+              <div class="alignright">
+                  <br><br><br>
+                  <p style="font-weight: 700; font-size: 48px">Import Students and Prof from CSV file</p>
+                  <br><br>
+                  <p style="font-weight: 700; font-size: 36px">This Page Allows You to Upload a List of Instructor and Student from a CSV formated with a header and 4 columns:
+                      term_month_year, course_num, course_name, instructor_assigned_name</p>
+                  <br><br>
+                  <p style="font-weight: 400; font-size: 24px;">The instructor must be registered to be added.<br>
+                      This Feature is Only Available to Sysops.</p>
 
-        <div>
-            <div class="alignright">
-                <br><br><br>
-                <p style="font-weight: 700; font-size: 48px">Import Students and Prof from CSV file</p>
-                <br><br>
-                <p style="font-weight: 700; font-size: 36px">This Page Allows You to Upload a List of Instructor and Student from a CSV formated with a header and 4 columns:
-                    term_month_year, course_num, course_name, instructor_assigned_name</p>
-                <br><br>
-                <p style="font-weight: 400; font-size: 24px;">The instructor must be registered to be added.<br>
-                    This Feature is Only Available to Sysops.</p>
+                  <br><br><br>
+                  <form action="{{ url_for('import_prof_course') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                      <label for="file" >Select a file</label>
+                      <input type="file" id="file" name="file"/>
+                      <br /><br/>
+                      <input type="submit" value="Import"/>
+                  </form>
+                  
+                  <div style="text-align: center; color: red;">{{msg}}</div>
+              </div>
 
-                <br><br><br>
-                <form action="{{ url_for('import_prof_course') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
-                    <label for="file" >Select a file</label>
-                    <input type="file" id="file" name="file"/>
-                    <br /><br/>
-                    <input type="submit" value="Import"/>
-                </form>
-                
-                <div style="text-align: center; color: red;">{{msg}}</div>
-            </div>
+              <div class="alignleft">
+                  <img src="{{url_for('static', filename='import.png')}}" style="width: 75%; padding-left: 5%;">
+              </div>
+          </div>
+      </div>
 
-            <div class="alignleft">
-                <img src="{{url_for('static', filename='import.png')}}" style="width: 75%; padding-left: 5%;">
-            </div>
-        </div>
-    </div>
-
-    <div class="phoneandtablet">
-        <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
-        <div class="line"></div>
-        <div id="textbox">
-            <!-- <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course from CSV file</u></p> -->
-            <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
-        </div>
-        <br><br><br>
-        <img src="{{url_for('static', filename='import.png')}}" style="width: 60%;" class="imgcenter">
-        <div style="text-align: center;">
-            <p style="font-weight: 600; font-size: 40px">Import Students and Prof from CSV file</p>
-            <br><br>
-            <p style="font-weight: 500; font-size: 20px">This Page Allows You to Upload a List of Instructor and Student from a CSV formated with a header and 4 columns:
-            term_month_year, course_num, course_name, instructor_assigned_name</p>
-            <br><br>
-            <p style="font-weight: 400; font-size: 18px;">The instructor must be registered to be added.<br>
-            This Feature is Only Available to Sysops.</p>
-            <br><br><br>
-            <form action="{{ url_for('import_prof_course') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
-                <label for="file" >Select a file</label>
-                <input type="file" id="file" name="file"/>
-                <br /><br/>
-                <input type="submit" value="Import"/>
-            </form>
-            
-            <div style="text-align: center; color: red;">{{msg}}</div>
-        </div>
-
-
-
-    </div>
-
-
-</body>
-
+      <div class="phoneandtablet">
+          <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+          <div class="line"></div>
+          <div id="textbox">
+              <!-- <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > Sysop Menu > <u>Import Course from CSV file</u></p> -->
+              <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/sysop_tasks/{{session_id}}';">Back to Sysop Tasks</button></div>
+          </div>
+          <br><br><br>
+          <img src="{{url_for('static', filename='import.png')}}" style="width: 60%;" class="imgcenter">
+          <div style="text-align: center;">
+              <p style="font-weight: 600; font-size: 40px">Import Students and Prof from CSV file</p>
+              <br><br>
+              <p style="font-weight: 500; font-size: 20px">This Page Allows You to Upload a List of Instructor and Student from a CSV formated with a header and 4 columns:
+              term_month_year, course_num, course_name, instructor_assigned_name</p>
+              <br><br>
+              <p style="font-weight: 400; font-size: 18px;">The instructor must be registered to be added.<br>
+              This Feature is Only Available to Sysops.</p>
+              <br><br><br>
+              <form action="{{ url_for('import_prof_course') }}{{session_id}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                  <label for="file" >Select a file</label>
+                  <input type="file" id="file" name="file"/>
+                  <br /><br/>
+                  <input type="submit" value="Import"/>
+              </form>
+              
+              <div style="text-align: center; color: red;">{{msg}}</div>
+          </div>
+      </div>
+  </body>
 </html>

@@ -27,17 +27,9 @@ def dashboard_post(session_id):
         delete_session(session_id)
         return redirect(url_for("logout"))
 
-    ta_admin = ''
-    if has_access_to_orange(session_id):
-        ta_admin = "TA Admin"
-
-    ta_management = ''
-    if has_access_to_blue(session_id):
-        ta_management = "TA Management"
-
-    sysop_tasks = ''
-    if check_group(User.sys_op, session_id):
-        sysop_tasks = "Sysop Tasks"
+    ta_admin = has_access_to_orange(session_id)
+    ta_management = has_access_to_blue(session_id)
+    sysop_tasks = check_group(User.sys_op, session_id)
 
     return render_template('dashboard.html', session_id=session_id, ta_admin=ta_admin, ta_management=ta_management, sysop_tasks=sysop_tasks)
 

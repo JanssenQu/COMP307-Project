@@ -2,9 +2,7 @@
 <html>
   <title>Course TA History</title>
   <head>
-    <script>
-        document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
       *{
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -188,6 +186,16 @@
         /* float: left; */
       }
 
+      tr {
+        background-color: #90BDEF;
+        border-radius: 2px;
+      }
+
+      td {
+        background-color: #D9D9D9;
+        border-radius: 2px;
+      }
+
       /* DESKTOP SIZE */
       @media only screen and (min-width: 1024px){
         .phoneandtablet {display: none;}
@@ -232,15 +240,15 @@
     <div style="overflow-x:auto;">
       <table class="tablecenter">
         <tr>
-            {% for header in headings %}
-            <th style="background-color: #90BDEF; border-radius: 5px">{{ header }}</th>
-            {% endfor %}
+          {% for header in headings %}
+          <th>{{ header }}</th>
+          {% endfor %}
         </tr>
         {% for row in data %}
         <tr>
-            {% for cell in row %}
-            <td style="background-color: #D9D9D9; border-radius: 5px">{{ cell }}</td>
-            {% endfor %}
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
         </tr>
         {% endfor %}
       </table>
@@ -248,13 +256,3 @@
     <div style="text-align: center; color: #C24C7C;">{{msg}}</div>
   </body>
   
-
-
-
-
-
-
-
-
-
-
