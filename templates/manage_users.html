@@ -171,6 +171,11 @@
         margin-right: auto;
       }
 
+      .tablecenter {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
       .next{
         display: inline;
       }
@@ -228,20 +233,23 @@
           <input type="text" placeholder="Enter Name" id="search" name="search" style="background-color: white; width: 155px; height: 35px; border-radius: 10px;">
           <input type="submit" name="option" value="Find"><br><br>
         </form>
-        <table style="text-align: center;">
-          <tr>
-              {% for header in headings %}
-              <th>{{ header }}</th>
-              {% endfor %}
-          </tr>
-          {% for row in data %}
-          <tr>
-              {% for cell in row %}
-              <td>{{ cell }}</td>
-              {% endfor %}
-          </tr>
-          {% endfor %}
-        </table>
+        <div style="text-align: center;">
+          <table class="tablecenter" style="border-radius: 10px;">
+            <tr>
+                {% for header in headings %}
+                <th style="margin-left: 2px; margin-right: 2px; background-color: #CFE2F3;">{{ header }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                <td style="background-color: beige;">{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <br><br>
         <div class="tab" style="text-align: center;">
           <button class="tablinks button" onclick="show(event, 'add')">Add User</button>
           <button class="tablinks button" onclick="show(event, 'update')">Update User</button>
