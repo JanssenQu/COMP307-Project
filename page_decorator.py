@@ -114,7 +114,7 @@ def ta_admin_post(session_id):
                     lines_failed_to_add, error_code = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
                 if error_code == -1:
-                        msg = "This file was not expected."
+                    msg = "This file was not expected."
                 elif len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor and course must be registered'
 
@@ -383,7 +383,7 @@ def import_prof_course_post(session_id):
                 lines_failed_to_add, errror_code = add_csv_to_db(filepath, add_prof_course_to_db)
                 msg = 'Data added'
                 if errror_code == -1:
-                        msg = "This file was not expected."
+                    msg = "This file was not expected."
                 elif len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. Please verify that the instructor is ' \
                         f'registered and the file is correctly formatted as term_month_year, course_num, course_name, ' \
