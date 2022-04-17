@@ -196,6 +196,8 @@ def add_csv_to_db(filepath, add_func):
             if line == 0:
                 header_len = len(row)
             elif header_len == len(row):
+                if add_func.__code__.co_argcount != len(row):
+                    return 0
                 added = add_func(*row)
                 if not added:
                     lines_failed_to_add.append(row)

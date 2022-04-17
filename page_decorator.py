@@ -121,7 +121,9 @@ def ta_admin_post(session_id):
                 else:
                     lines_failed_to_add = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
-                if len(lines_failed_to_add) > 0:
+                if lines_failed_to_add == 0:
+                        msg = "This file was not expected."
+                elif len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor and course must be registered'
 
                 return render_template('ta_admin.html', msg=msg, session_id=session_id)
