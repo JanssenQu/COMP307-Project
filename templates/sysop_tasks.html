@@ -1,25 +1,230 @@
-<a href="/dashboard/{{session_id}}">Return to Dashboard</a><br><br>
-<h1>Sysop Tasks</h1>
+<!DOCTYPE html>
+<html>
+  <title>Sysop Menu</title>
+  <head>
+    <script>
+      document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    </script>
+    <style>
+      *{
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        margin: 0%;
+      }
 
-<h2>Choose an Option </h2>
 
+      .alignleft {
+	      float: left;
+        width: 40%;
+      }
 
-<a href="/manage_users/{{session_id}}">Manage Users</a><br><br>
+      .alignright {
+	      float: right;
+        width: 40%;
+        padding-right: 10%;
+      }
+
+      .alignrighttwo{
+        float: right;
+      }
+
+      .button {
+        width: auto;
+        font-size: 15px;
+        background-color: #C24C7C;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .button:hover {
+        background-color: #F6A72E;
+      }
+
+      .dashbutton{
+        width: auto;
+        font-size: 15px;
+        background-color: #F6A72E;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 0px 2px;
+        cursor: pointer;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+
+      .dashbutton:hover{
+        background-color: #C24C7C;
+      }
+
+      .line{
+        /* Line 1 */
+        position: relative;
+        width: 95%;
+        height: 0px;
+        left: 2%;
+        top: 5px;
+
+        border: 1px solid #3375BF;
+      }
+
+      .containerone{
+        margin: 0%;
+        padding-left: 2%;
+      }
+
+      .ellipse{
+        position: absolute;
+        top: 80%;
+        width: 100%;
+        height: 40%;
+        flex-grow: 1;
+        background: #CFE2F3;
+      }
+
+      .ellipsephone{
+        position: absolute;
+        top: 95%;
+        width: 100%;
+        height: 40%;
+        flex-grow: 1;
+        background: #CFE2F3;
+      }
+
+      input[type=submit]{
+        background-color: #C24C7C;
+        border-radius: 50px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      
+      input[type=submit]:hover{
+        background-color: #F6A72E;
+      }
+
+      .imgcenter{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .next{
+        display: inline;
+      }
+
+      .desktop{
+        width: auto;
+      }
+
+      .phoneandtablet {
+        width: auto;
+      }
+
+      /* DESKTOP SIZE */
+      @media only screen and (min-width: 1024px){
+        .phoneandtablet {display: none;}
+      }
+
+      /* TABLET - PHONE SIZE */
+      @media only screen and (max-width: 1024px){
+        .desktop {display: none;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="desktop">
+      <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+      <div class="line"></div>
+      <div id="textbox">
+        <p class="alignleft" style="color: #0F2233; padding-left: 2%; padding-top: 5px;">Dashboard > <u>Sysop Menu</u> </p>
+        <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="dashbutton" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+      </div>
+      <br><br><br><br>
+      <p style="padding-left: 2%; font-weight: 700; font-size: 48px;">Welcome to The System Operator Menu!</p>
+      <img src="{{url_for('static', filename='sysopmenu.png')}}" style="width: 35%;" class="imgcenter">
+      <p style="text-align: center; font-weight: 700; font-size: 36px;">Choose an Option :</p>
+      <br><br><br><br>
+      <table style="padding-left: 5%;">
+        <tr >
+          <td style="width: 10%; text-align: center;">
+            <button onclick="window.location.href='/manage_users/{{session_id}}'" class="button">Manage Users</button>
+          </td>
+          <td style="width: 10%; text-align: center;">
+            <button onclick="window.location.href='/import_prof_course/{{session_id}}'" class="button">CSV Import Prof and Courses</button>
+          </td>
+          <td style="width: 10%; text-align: center;">
+            <button onclick="window.location.href='/manual_add_prof_course/{{session_id}}'" class="button">Manual Import Prof and Courses</button>
+          </td>
+        </tr>
+        <tr style="text-align: center;">
+          <td >
+            Edit, Delete, Add User Accounts
+          </td>
+          <td>
+            Add Profs and Student from CSV File
+          </td>
+          <td>
+            Add Profs and Student Manually
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="phoneandtablet">
+      <p style="color: #3375BF; font-size: medium;" class="containerone"><span style="font-size: 50px;">A-TA</span><b style="padding-left: 10px;">Assisting Teaching Assistants</b></p>
+      <div class="line"></div>
+      <div id="textbox">
+        <div style="padding-top: 15px; padding-left: 1.5%; padding-right: 2%;" class="alignrighttwo"><button class="button" onclick="window.location.href='/dashboard/{{session_id}}';">Return to Dashboard</button></div>
+      </div>
+      <br><br><br><br>
+      <p style="padding-left: 2%; font-weight: 700; font-size: 48px;">Welcome to The System Operator Menu!</p>
+      <img src="{{url_for('static', filename='sysopmenu.png')}}" style="width: 50%;" class="imgcenter">
+      <br><br>
+      <p style="text-align: center; font-weight: 700; font-size: 36px;">Choose an Option :</p>
+      <br><br><br><br>
+      <div style="text-align: center;">
+        <button onclick="window.location.href='/manage_users/{{session_id}}'" class="button">Manage Users</button>
+        <p>Edit, Delete, Add User Accounts</p>
+        <br><br>
+        <button onclick="window.location.href='/import_prof_course/{{session_id}}'" class="button">CSV Import Prof and Courses</button>
+        <p>Add Profs and Student from CSV File</p>
+        <br><br>
+        <button onclick="window.location.href='/manual_add_prof_course/{{session_id}}'" class="button">Manual Import Prof and Courses</button>
+        <p>Add Profs and Student Manually</p>
+      </div>
+    </div>
+  </body>
+
+  <!-- <a href="/manage_users/{{session_id}}">Manage Users</a><br><br>
 <a href="/import_prof_course/{{session_id}}">CSV Import Prof and Courses</a><br><br>
-<a href="/manual_add_prof_course/{{session_id}}">Manual Import Prof and Courses</a><br><br>
+<a href="/manual_add_prof_course/{{session_id}}">Manual Import Prof and Courses</a><br><br> -->
 
-<!--- maybe use buttons instead which ever looks better
-
-<form action="{{ url_for('manage_users') }}" method="GET">
+<!-- <form action="{{ url_for('manage_users') }}" method="GET">
   <input type="submit" value="Manage Users">
 </form>
-
+<p>Edit, Delete, Add User Accounts</p>
+<br><br>
 <form action="{{ url_for('import_prof_course') }}" method="GET">
   <input type="submit" value="CSV Import Prof and Courses">
 </form>
-
+<p>Add Profs and Student from CSV File</p>
+<br><br>
 <form action="{{ url_for('manual_add_prof_course') }}" method="GET">
   <input type="submit" value="Manual Import Prof and Courses">
 </form>
-
---->
+<p>Add Profs and Student Manually</p> -->

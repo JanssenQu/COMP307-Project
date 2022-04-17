@@ -117,11 +117,11 @@ def ta_admin_post(session_id):
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
                 if request.form['file_type'] == 'course_quota':
-                    lines_failed_to_add = add_csv_to_db(filepath, add_course_quota_to_db)
+                    lines_failed_to_add, error_code = add_csv_to_db(filepath, add_course_quota_to_db)
                 else:
-                    lines_failed_to_add = add_csv_to_db(filepath, add_ta_cohort_to_db)
+                    lines_failed_to_add, error_code = add_csv_to_db(filepath, add_ta_cohort_to_db)
                 msg = 'Data added'
-                if lines_failed_to_add == 0:
+                if error_code == -1:
                         msg = "This file was not expected."
                 elif len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. The instructor and course must be registered'
@@ -386,9 +386,13 @@ def import_prof_course_post(session_id):
                 # set a filepath to save a temp file
                 filepath = os.path.join('dir_for_csv', uploaded_file.filename)
                 uploaded_file.save(filepath)
-                lines_failed_to_add = add_csv_to_db(filepath, add_prof_course_to_db)
+                # add csv and get a return either -1 if csv file has wrong number of columns
+                # or a list of rows failed to add
+                lines_failed_to_add, errror_code = add_csv_to_db(filepath, add_prof_course_to_db)
                 msg = 'Data added'
-                if len(lines_failed_to_add) > 0:
+                if errror_code == -1:
+                        msg = "This file was not expected."
+                elif len(lines_failed_to_add) > 0:
                     msg = f'Failed to add the following rows {lines_failed_to_add}. Please verify that the instructor is ' \
                         f'registered and the file is correctly formatted as term_month_year, course_num, course_name, ' \
                         f'instructor_assigned_name'
