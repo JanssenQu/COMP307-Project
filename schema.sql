@@ -73,6 +73,7 @@ CREATE TABLE ta_courses (
     user_id integer,
     course_id integer NOT NULL,
     course_term text NOT NULL,
+    hours integer,
     PRIMARY KEY (user_id, course_id, course_term),
     FOREIGN KEY (user_id) REFERENCES tas (user_id),
     FOREIGN KEY (course_id, course_term) REFERENCES course_terms (course_id, course_term)
