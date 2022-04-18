@@ -91,6 +91,8 @@ def ta_management_post(session_id, course_id):
         course_num_list = get_all_courses()
         if request.method == 'POST':
             course_num = request.form.get('course')
+            if course_num == "":
+                return render_template('ta_management.html', session_id=session_id, course_list=course_num_list)
             course_id = get_course_id(course_num)
             return redirect(url_for("ta_management_dashboard", session_id=session_id, course_id=course_id, course_num=course_num))
 
@@ -229,8 +231,10 @@ def perf_log_post(session_id, course_id, course_num):
             ta_name = request.form.get('ta')
             comment = request.form["perf_log_notes"]
             ta_id = find_ta_id(ta_name, course_id, course_term)
-            add_performance_log(prof_id, ta_id, course_id, course_term, comment)
-            return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list,msg="Added")
+            try:
+                add_performance_log(prof_id, ta_id, course_id, course_term, comment)
+            finally:
+                return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list)
 
         return render_template('perf_log.html', session_id=session_id, course_id=course_id, course_num=course_num, term_list=course_term_list, ta_list=ta_name_list)
 
