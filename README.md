@@ -17,4 +17,4 @@ Simply run `index.py` to launch the website on localhost!
 
 ## Course Competition
 
-Our website placed top 3!
+Our website placed top 3 among all students!
