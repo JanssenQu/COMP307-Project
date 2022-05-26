@@ -14,3 +14,7 @@ Simply run `index.py` to launch the website on localhost!
  * Janssen Qu
  * Zhongyu Zheng
  * Inès Rabiey
+
+## Course Competition
+
+Our website placed top 3!
